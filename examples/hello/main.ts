@@ -9,7 +9,9 @@ function loadTranslations(gt: Gettext) {
     const podir = path.join(import.meta.dirname, "po");
     for (const file of fs.readdirSync(podir)) {
         if (file.endsWith(".po")) {
-            const translations = po.parse(fs.readFileSync(file));
+            const translations = po.parse(
+                fs.readFileSync(path.join(podir, file)),
+            );
             gt.addTranslations(file.slice(0, -3), "messages", translations);
         }
     }

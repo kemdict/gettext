@@ -1,0 +1,52 @@
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+# SPDX-FileCopyrightText: 2025 Kisaragi Hiu <mail@kisaragi-hiu.com>
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-12-27 22:45+0900\n"
+"PO-Revision-Date: 2025-12-27 22:52+0900\n"
+"Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
+"Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
+"Language: zh_TW\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Lokalize 25.11.70\n"
+
+#: main.ts:23
+msgid ""
+"\n"
+"@kemdict/gettext hello example - show hello world\n"
+"\n"
+"(The name is inspired by GNU Hello, which has the same purpose.)\n"
+"\n"
+"Options:\n"
+"\n"
+"--upper: Upcase message before showing\n"
+"--lower: Downcase message before showing\n"
+"--help: Show help (this message)\n"
+msgstr ""
+"\n"
+"@kemdict/gettext hello 範例 - 顯示 hello world 範例訊息\n"
+"\n"
+"(Hello 這個名字是引用 GNU Hello，這個範例跟它的用途相同。)\n"
+"\n"
+"選項：\n"
+"\n"
+"--upper: 先轉為大寫再顯示訊息\n"
+"--lower: 先轉為小寫再顯示訊息\n"
+"--help: 顯示說明 (這個訊息)\n"
+
+#: main.ts:47
+msgid "Hello world!"
+msgstr "您好！"
+
+#: main.ts:51
+#, javascript-format
+msgid "You provided %s positional argument."
+msgid_plural "You provided %s positional arguments."
+msgstr[0] "您提供了 %s 個 positional 參數。"
