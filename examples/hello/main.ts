@@ -21,7 +21,18 @@ loadTranslations(gt);
 // TODO: for a cli app, how to read this from the environment?
 // LANGUAGE, LC_ALL, LC_MESSAGES, LANG
 // TODO: fallback. Catalog should probably not be per Gettext instance.
-gt.setLocale("zh_TW");
+
+// Rudimentary $LANGUAGE reading
+const availableLocales = new Set(gt.getLocales());
+let locale = "";
+for (const preferred of process.env["LANGUAGE"]?.split(":") ?? []) {
+    if (availableLocales.has(preferred)) {
+        locale = preferred;
+        break;
+    }
+}
+gt.setLocale(locale);
+
 const _ = gt.gettext.bind(gt);
 const ngettext = gt.ngettext.bind(gt);
 

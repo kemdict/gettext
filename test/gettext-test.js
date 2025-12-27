@@ -81,6 +81,13 @@ describe("Gettext", function () {
         });
     });
 
+    describe("#getLocales", function () {
+        it("can return all locales in the catalog", function () {
+            gt.addTranslations("et-EE", "messages", jsonFile);
+            assert.deepEqual(gt.getLocales(), ["et-EE"]);
+        });
+    });
+
     describe("#setLocale", function () {
         it("should have the empty string as default locale", function () {
             assert.equal(gt.locale, "");
