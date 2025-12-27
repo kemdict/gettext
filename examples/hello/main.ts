@@ -43,7 +43,7 @@ const helptext = _(`
 
 Options:
 
---upper: Upcase message before showing
+--help: show help (this message)
 `);
 
 const parsedArgs = parseArgs({
