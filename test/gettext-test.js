@@ -334,6 +334,13 @@ describe("Gettext", function () {
         var errorListener;
 
         beforeEach(function () {
+            gt = new Gettext({
+                translations: {
+                    "et-EE": {
+                        messages: jsonFile,
+                    },
+                },
+            });
             errorListener = mock.fn();
             gt.on("error", errorListener);
         });
@@ -350,18 +357,11 @@ describe("Gettext", function () {
         });
 
         it("should emit an error event when a locale that has no translations is set", function () {
-            gt.setLocale("et-EE");
+            gt.setLocale("foo");
             assert.equal(errorListener.mock.callCount(), 1);
         });
 
         it("should emit an error event when no locale has been set", function () {
-            gt = new Gettext({
-                translations: {
-                    "et-EE": {
-                        messages: jsonFile,
-                    },
-                },
-            });
             gt.gettext("o2-1");
             assert.equal(errorListener.mock.callCount(), 1);
             gt.setLocale("et-EE");
@@ -370,26 +370,12 @@ describe("Gettext", function () {
         });
 
         it("should emit an error event when a translation is missing", function () {
-            gt = new Gettext({
-                translations: {
-                    "et-EE": {
-                        messages: jsonFile,
-                    },
-                },
-            });
             gt.setLocale("et-EE");
             gt.gettext("This message is not translated");
             assert.equal(errorListener.mock.callCount(), 1);
         });
 
         it("should not emit any error events when a translation is found", function () {
-            gt = new Gettext({
-                translations: {
-                    "et-EE": {
-                        messages: jsonFile,
-                    },
-                },
-            });
             gt.setLocale("et-EE");
             gt.gettext("o2-1");
             assert.equal(errorListener.mock.callCount(), 0);
