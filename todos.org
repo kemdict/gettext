@@ -44,3 +44,5 @@ const { _, ngettext } = gt.bindLocale("pt_BR")
 #+end_src
 
 then these returned functions can effectively have the locale as their own state, instead of relying on state in the class. This should eliminate the need to have more than one instance of the Gettext class, even for server applications.
+
+* Example project / sandboxes for Astro, SvelteKit
