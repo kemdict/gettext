@@ -7,9 +7,20 @@ import { describe, beforeEach, it } from 'node:test';
 
 var sinon = require('sinon');
 
+import { getLanguageCode } from '../lib/private.js';
+describe('Private', () => {
+    describe('getLanguageCode', function () {
+        it('should normalize locale string', function () {
+            assert.equal(getLanguageCode('ab-cd_ef.utf-8'), 'ab');
+            assert.equal(getLanguageCode('ab-cd_ef'), 'ab');
+        });
+    });
+});
+
 describe('Gettext', function () {
-    /** @type {typeof Gettext} */
+    /** @type {Gettext} */
     var gt;
+    /** @type {import('gettext-parser').GetTextTranslations} */
     var jsonFile;
 
     beforeEach(function () {
@@ -52,13 +63,6 @@ describe('Gettext', function () {
                 gtc = new Gettext({ sourceLocale: function () {} });
                 assert.equal(gtc.sourceLocale, '');
             });
-        });
-    });
-
-    describe('#getLanguageCode', function () {
-        it('should normalize locale string', function () {
-            assert.equal(Gettext.getLanguageCode('ab-cd_ef.utf-8'), 'ab');
-            assert.equal(Gettext.getLanguageCode('ab-cd_ef'), 'ab');
         });
     });
 
