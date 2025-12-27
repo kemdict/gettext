@@ -25,9 +25,7 @@
       "url": "http://github.com/kemdict/gettext/blob/master/LICENSE"
     }
   ],
-  "dependencies": {
-    "lodash.get": "^4.4.2"
-  },
+  "dependencies": {},
   "devDependencies": {
     "chai": "^4.2.0",
     "grunt": "^1.0.1",
@@ -38,7 +36,7 @@
     "sinon": "^9.0.1"
   },
   "engine": {
-    "node": ">=10"
+    "node": ">=14"
   },
   "keywords": [
     "i18n",
