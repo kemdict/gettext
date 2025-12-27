@@ -32,3 +32,15 @@ ngettext(
 
 - We should read LANGUAGE, LC_ALL, LC_MESSAGES, LANG in that order (except if LANG is C then always return msgid)
 - We need a way to specify the current locale per request. This probably means splitting catalog from the gettext instance.
+
+* “multithreaded” locale
+
+We need to check what bindtextdomain does. Also is there a bindlocale in the C/++ library?
+
+Make a function that takes a locale and returns each localization function, like
+
+#+begin_src javascript
+const { _, ngettext } = gt.bindLocale("pt_BR")
+#+end_src
+
+then these returned functions can effectively have the locale as their own state, instead of relying on state in the class. This should eliminate the need to have more than one instance of the Gettext class, even for server applications.

@@ -1,4 +1,4 @@
-import Gettext from "@kemdict/gettext";
+import Gettext, { guessLocale } from "@kemdict/gettext";
 import { po } from "gettext-parser";
 import { parseArgs } from "node:util";
 import fs from "node:fs";
@@ -24,21 +24,7 @@ function loadTranslations() {
 const gt = new Gettext({
     translations: loadTranslations(),
 });
-
-// TODO: for a cli app, how to read this from the environment?
-// LANGUAGE, LC_ALL, LC_MESSAGES, LANG
-// TODO: fallback. Catalog should probably not be per Gettext instance.
-
-// Rudimentary $LANGUAGE reading
-const availableLocales = new Set(gt.getLocales());
-let locale = "";
-for (const preferred of process.env["LANGUAGE"]?.split(":") ?? []) {
-    if (availableLocales.has(preferred)) {
-        locale = preferred;
-        break;
-    }
-}
-gt.setLocale(locale);
+gt.setFirstAvailableLocale(guessLocale());
 
 const _ = gt.gettext.bind(gt);
 const ngettext = gt.ngettext.bind(gt);

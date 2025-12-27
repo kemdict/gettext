@@ -8,6 +8,8 @@ The plan is to move away from Grunt, move to node:test and node:assert, do the r
 
 ### Changes
 
+- Add guessLocale() to guess locale based on environment variables like GNU Gettext does.
+- Add .setFirstAvailableLocale to allow passing in a list of preferred locales and using the first that is available in the catalogs
 - Remove .addTranslations in favor of passing translations in in the constructor, because adding translations dynamically at runtime sounds like trouble
 - Add .getLocales to allow hacking on selecting locale based on what is available
 - Remove functions that node-gettext already deprecated
