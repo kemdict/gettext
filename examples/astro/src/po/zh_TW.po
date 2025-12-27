@@ -1,0 +1,43 @@
+# Chinese translations for PACKAGE package
+# PACKAGE 套件的正體中文翻譯.
+# Copyright (C) 2025 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# 如月飛羽 <mail@kisaragi-hiu.com>, 2025.
+#
+# SPDX-FileCopyrightText: 2025 Kisaragi Hiu <mail@kisaragi-hiu.com>
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-12-28 02:41+0900\n"
+"PO-Revision-Date: 2025-12-28 02:43+0900\n"
+"Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
+"Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
+"Language: zh_TW\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Lokalize 25.11.70\n"
+
+msgid "Astro homepage"
+msgstr "Astro 首頁"
+
+msgid ""
+"To get started, open the <code><pre>src/pages</pre></code> directory in your "
+"project."
+msgstr "首先先開啟您的專案當中的 <code><pre>src/pages</pre></code> 目錄吧。"
+
+msgid "Read our docs"
+msgstr "閱讀說明文件"
+
+msgid "Join our Discord"
+msgstr "加入我們的 Discord 伺服器"
+
+msgid "What's New in Astro 5.0?"
+msgstr "Astro 5.0 有什麼新功能？"
+
+msgid ""
+"From content layers to server islands, click to learn more about the new "
+"features and improvements in Astro 5.0"
+msgstr "點擊此處了解更多關於 Astro 5.0 新功能與改善的資訊，例如內容層和伺服器島嶼"

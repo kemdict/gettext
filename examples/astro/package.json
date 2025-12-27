@@ -9,10 +9,12 @@
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^5.16.6",
-    "@kemdict/gettext": "workspace:"
+    "@kemdict/gettext": "workspace:",
+    "astro": "^5.16.6"
   },
   "devDependencies": {
-    "prettier-plugin-astro": "^0.14.1"
+    "@astrojs/compiler": "^2.13.0",
+    "prettier-plugin-astro": "^0.14.1",
+    "zx": "^8.8.5"
   }
 }
