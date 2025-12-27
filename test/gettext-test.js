@@ -37,6 +37,38 @@ describe("Gettext", function () {
             gtc = null;
         });
 
+        describe("translations", function () {
+            it("should store added translations", function () {
+                gt = new Gettext({
+                    translations: {
+                        "et-EE": {
+                            messages: jsonFile,
+                        },
+                    },
+                });
+                assert.ok(gt.catalogs["et-EE"]);
+                assert.ok(gt.catalogs["et-EE"].messages);
+                assert.equal(
+                    gt.catalogs["et-EE"].messages.charset,
+                    "iso-8859-13",
+                );
+            });
+            it("should store added translations on a custom domain", function () {
+                gt = new Gettext({
+                    translations: {
+                        "et-EE": {
+                            mydomain: jsonFile,
+                        },
+                    },
+                });
+
+                assert.ok(gt.catalogs["et-EE"].mydomain);
+                assert.equal(
+                    gt.catalogs["et-EE"].mydomain.charset,
+                    "iso-8859-13",
+                );
+            });
+        });
         describe("#sourceLocale option", function () {
             it("should accept any string as a locale", function () {
                 gtc = new Gettext({ sourceLocale: "en-US" });
@@ -64,26 +96,15 @@ describe("Gettext", function () {
         });
     });
 
-    describe("#addTranslations", function () {
-        it("should store added translations", function () {
-            gt.addTranslations("et-EE", "messages", jsonFile);
-
-            assert.ok(gt.catalogs["et-EE"]);
-            assert.ok(gt.catalogs["et-EE"].messages);
-            assert.equal(gt.catalogs["et-EE"].messages.charset, "iso-8859-13");
-        });
-
-        it("should store added translations on a custom domain", function () {
-            gt.addTranslations("et-EE", "mydomain", jsonFile);
-
-            assert.ok(gt.catalogs["et-EE"].mydomain);
-            assert.equal(gt.catalogs["et-EE"].mydomain.charset, "iso-8859-13");
-        });
-    });
-
     describe("#getLocales", function () {
         it("can return all locales in the catalog", function () {
-            gt.addTranslations("et-EE", "messages", jsonFile);
+            gt = new Gettext({
+                translations: {
+                    "et-EE": {
+                        messages: jsonFile,
+                    },
+                },
+            });
             assert.deepEqual(gt.getLocales(), ["et-EE"]);
         });
     });
@@ -150,7 +171,13 @@ describe("Gettext", function () {
 
     describe("Resolve translations", function () {
         beforeEach(function () {
-            gt.addTranslations("et-EE", "messages", jsonFile);
+            gt = new Gettext({
+                translations: {
+                    "et-EE": {
+                        messages: jsonFile,
+                    },
+                },
+            });
             gt.setLocale("et-EE");
         });
 
@@ -251,7 +278,13 @@ describe("Gettext", function () {
 
     describe("Unresolvable transaltions", function () {
         beforeEach(function () {
-            gt.addTranslations("et-EE", "messages", jsonFile);
+            gt = new Gettext({
+                translations: {
+                    "et-EE": {
+                        messages: jsonFile,
+                    },
+                },
+            });
         });
 
         it("should pass msgid when no translation is found", function () {
@@ -322,7 +355,13 @@ describe("Gettext", function () {
         });
 
         it("should emit an error event when no locale has been set", function () {
-            gt.addTranslations("et-EE", "messages", jsonFile);
+            gt = new Gettext({
+                translations: {
+                    "et-EE": {
+                        messages: jsonFile,
+                    },
+                },
+            });
             gt.gettext("o2-1");
             assert.equal(errorListener.mock.callCount(), 1);
             gt.setLocale("et-EE");
@@ -331,14 +370,26 @@ describe("Gettext", function () {
         });
 
         it("should emit an error event when a translation is missing", function () {
-            gt.addTranslations("et-EE", "messages", jsonFile);
+            gt = new Gettext({
+                translations: {
+                    "et-EE": {
+                        messages: jsonFile,
+                    },
+                },
+            });
             gt.setLocale("et-EE");
             gt.gettext("This message is not translated");
             assert.equal(errorListener.mock.callCount(), 1);
         });
 
         it("should not emit any error events when a translation is found", function () {
-            gt.addTranslations("et-EE", "messages", jsonFile);
+            gt = new Gettext({
+                translations: {
+                    "et-EE": {
+                        messages: jsonFile,
+                    },
+                },
+            });
             gt.setLocale("et-EE");
             gt.gettext("o2-1");
             assert.equal(errorListener.mock.callCount(), 0);
