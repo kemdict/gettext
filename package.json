@@ -3,7 +3,9 @@
   "description": "A JavaScript implementation of gettext, a localization framework",
   "version": "0.0.1",
   "author": "Andris Reinman",
-  "maintainers": ["Kisaragi Hiu"],
+  "maintainers": [
+    "Kisaragi Hiu"
+  ],
   "homepage": "http://github.com/kemdict/gettext",
   "repository": {
     "type": "git",
@@ -12,7 +14,7 @@
   "type": "module",
   "scripts": {
     "fmt": "prettier -w ./lib",
-    "test": "grunt",
+    "test": "node --test",
     "docs": "jsdoc2md -f lib/gettext.js -t docs/README.template.md --partial docs/templates/*.hbs --param-list-format list > README.md"
   },
   "main": "./lib/gettext.js",
@@ -26,13 +28,8 @@
       "url": "http://github.com/kemdict/gettext/blob/master/LICENSE"
     }
   ],
-  "dependencies": {},
   "devDependencies": {
-    "chai": "^4.2.0",
-    "grunt": "^1.0.1",
-    "grunt-cli": "^1.2.0",
-    "grunt-mocha-test": "^0.12.7",
-    "mocha": "^7.1.1",
+    "@types/node": "^25.0.3",
     "prettier": "^3.7.4",
     "sinon": "^9.0.1"
   },

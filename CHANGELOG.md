@@ -13,6 +13,8 @@ The plan is to move away from Grunt, move to node:test and node:assert, do the r
 
 ### Project changes
 
+- test with node:test and node:assert instead of mocha and chai; remove grunt
+  - TODO: move from sinon to node:test's mocking facilities
 - set up typescript in-editor checking (ie. turn on checkJs)
 - stop using jshint
 - set up prettier
