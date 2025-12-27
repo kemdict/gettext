@@ -14,7 +14,7 @@
   "type": "module",
   "scripts": {
     "fmt": "prettier -w ./lib",
-    "test": "node --test",
+    "test": "bun test ./test/gettext-test.js",
     "docs": "jsdoc2md -f lib/gettext.js -t docs/README.template.md --partial docs/templates/*.hbs --param-list-format list > README.md"
   },
   "main": "./lib/gettext.js",
