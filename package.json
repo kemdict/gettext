@@ -37,7 +37,6 @@
     "chai": "^4.2.0",
     "grunt": "^1.0.1",
     "grunt-cli": "^1.2.0",
-    "grunt-contrib-jshint": "^1.0.0",
     "grunt-mocha-test": "^0.12.7",
     "mocha": "^7.1.1",
     "prettier": "^3.7.4",

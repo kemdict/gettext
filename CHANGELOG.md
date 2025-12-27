@@ -8,6 +8,7 @@ The plan is to move away from Grunt, move to node:test and node:assert, do the r
 
 ### Project changes
 
+- stop using jshint
 - set up prettier
 - remove unused dependency
 - use pnpm
