@@ -21,6 +21,12 @@ importers:
         specifier: ^3.7.4
         version: 3.7.4
 
+  examples/hello:
+    dependencies:
+      '@kemdict/gettext':
+        specifier: 'workspace:'
+        version: link:../..
+
 packages:
 
   '@types/gettext-parser@8.0.0':
