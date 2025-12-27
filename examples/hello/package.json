@@ -1,1 +1,1 @@
-{ "dependencies": { "@kemdict/gettext": "workspace:" }, "type": "module" }
+{"dependencies":{"@kemdict/gettext":"workspace:","sprintf-js":"^1.1.3"},"type":"module","devDependencies":{"@types/sprintf-js":"^1.1.4"}}
