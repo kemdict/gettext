@@ -18,6 +18,9 @@ function loadTranslations(gt: Gettext) {
 }
 const gt = new Gettext();
 loadTranslations(gt);
+// TODO: for a cli app, how to read this from the environment?
+// LANGUAGE, LC_ALL, LC_MESSAGES, LANG
+// TODO: fallback. Catalog should probably not be per Gettext instance.
 gt.setLocale("zh_TW");
 const _ = gt.gettext.bind(gt);
 const ngettext = gt.ngettext.bind(gt);

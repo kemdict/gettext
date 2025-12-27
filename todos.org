@@ -25,3 +25,8 @@ ngettext(
 #+end_src
 
 is not only nice to have, it is necessary.
+
+* Getting locale; locale fallback logic; reading locale from environment
+
+- We should read LANGUAGE, LC_ALL, LC_MESSAGES, LANG in that order (except if LANG is C then always return msgid)
+- We need a way to specify the current locale per request. This probably means splitting catalog from the gettext instance.
