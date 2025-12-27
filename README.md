@@ -6,6 +6,10 @@ The main use is for [Kemdict](https://github.com/kemdict/kemdict).
 
 The design of not directly depending on gettext-parser will be kept.
 
+## Stability
+
+I do not commit to any backwards compatibility whatsoever at this early stage.
+
 The rest is from node-gettext's README; I'll rewrite it later.
 
 ---
