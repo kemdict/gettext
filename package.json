@@ -14,7 +14,7 @@
   "type": "module",
   "scripts": {
     "fmt": "prettier -w ./lib",
-    "test": "bun test ./test/gettext-test.js",
+    "test": "node --test",
     "docs": "jsdoc2md -f lib/gettext.js -t docs/README.template.md --partial docs/templates/*.hbs --param-list-format list > README.md"
   },
   "main": "./lib/gettext.js",
@@ -32,8 +32,7 @@
     "@types/gettext-parser": "^8.0.0",
     "@types/node": "^25.0.3",
     "gettext-parser": "^9.0.0",
-    "prettier": "^3.7.4",
-    "sinon": "^9.0.1"
+    "prettier": "^3.7.4"
   },
   "engine": {
     "node": ">=24"

@@ -3,9 +3,7 @@
 import Gettext from '../lib/gettext.js';
 import fs from 'node:fs';
 import assert from 'node:assert/strict';
-import { describe, beforeEach, it } from 'node:test';
-
-var sinon = require('sinon');
+import { describe, beforeEach, it, mock } from 'node:test';
 
 import { getLanguageCode } from '../lib/private.js';
 describe('Private', () => {
@@ -26,7 +24,7 @@ describe('Gettext', function () {
     beforeEach(function () {
         gt = new Gettext({ debug: false });
         jsonFile = JSON.parse(
-            fs.readFileSync(__dirname + '/fixtures/latin13.json', {
+            fs.readFileSync(import.meta.dirname + '/fixtures/latin13.json', {
                 encoding: 'utf-8',
             }),
         );
@@ -292,75 +290,76 @@ describe('Gettext', function () {
     });
 
     describe('Events', function () {
+        /** @type {import('node:test').Mock<Function>} */
         var errorListener;
 
         beforeEach(function () {
-            errorListener = sinon.spy();
+            errorListener = mock.fn();
             gt.on('error', errorListener);
         });
 
         it('should notify a registered listener of error events', function () {
             gt.emit('error', 'Something went wrong');
-            assert.equal(errorListener.callCount, 1);
+            assert.equal(errorListener.mock.callCount(), 1);
         });
 
         it('should deregister a previously registered event listener', function () {
             gt.off('error', errorListener);
             gt.emit('error', 'Something went wrong');
-            assert.equal(errorListener.callCount, 0);
+            assert.equal(errorListener.mock.callCount(), 0);
         });
 
         it('should emit an error event when a locale that has no translations is set', function () {
             gt.setLocale('et-EE');
-            assert.equal(errorListener.callCount, 1);
+            assert.equal(errorListener.mock.callCount(), 1);
         });
 
         it('should emit an error event when no locale has been set', function () {
             gt.addTranslations('et-EE', 'messages', jsonFile);
             gt.gettext('o2-1');
-            assert.equal(errorListener.callCount, 1);
+            assert.equal(errorListener.mock.callCount(), 1);
             gt.setLocale('et-EE');
             gt.gettext('o2-1');
-            assert.equal(errorListener.callCount, 1);
+            assert.equal(errorListener.mock.callCount(), 1);
         });
 
         it('should emit an error event when a translation is missing', function () {
             gt.addTranslations('et-EE', 'messages', jsonFile);
             gt.setLocale('et-EE');
             gt.gettext('This message is not translated');
-            assert.equal(errorListener.callCount, 1);
+            assert.equal(errorListener.mock.callCount(), 1);
         });
 
         it('should not emit any error events when a translation is found', function () {
             gt.addTranslations('et-EE', 'messages', jsonFile);
             gt.setLocale('et-EE');
             gt.gettext('o2-1');
-            assert.equal(errorListener.callCount, 0);
+            assert.equal(errorListener.mock.callCount(), 0);
         });
 
         it('should not emit any error events when the current locale is the default locale', function () {
             var gtd = new Gettext({ sourceLocale: 'en-US' });
-            var errorListenersourceLocale = sinon.spy();
+            var errorListenersourceLocale = mock.fn();
             gtd.on('error', errorListenersourceLocale);
             gtd.setLocale('en-US');
             gtd.gettext('This message is not translated');
-            assert.equal(errorListenersourceLocale.callCount, 0);
+            assert.equal(errorListenersourceLocale.mock.callCount(), 0);
         });
     });
 
     describe('Aliases', function () {
-        it('should forward textdomain(domain) to setTextDomain(domain)', function () {
-            sinon.stub(gt, 'setTextDomain');
+        it('should forward textdomain(domain) to setTextDomain(domain)', function (ctx) {
+            ctx.mock.method(gt, 'setTextDomain');
             gt.textdomain('messages');
-            assert.ok(gt.setTextDomain.calledWith('messages'));
-            gt.setTextDomain.restore();
+            assert.deepEqual(gt.setTextDomain.mock.calls[0].arguments, [
+                'messages',
+            ]);
         });
 
-        it('should forward setlocale(locale) to setLocale(locale)', function () {
-            sinon.stub(gt, 'setLocale');
+        it('should forward setlocale(locale) to setLocale(locale)', function (ctx) {
+            ctx.mock.method(gt, 'setLocale');
             gt.setLocale('et-EE');
-            assert.ok(gt.setLocale.calledWith('et-EE'));
-            gt.setLocale.restore();
+            assert.deepEqual(gt.setLocale.mock.calls[0].arguments, ['et-EE']);
         });
     });
 });
