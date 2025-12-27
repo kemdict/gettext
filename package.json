@@ -15,6 +15,7 @@
     "url": "http://github.com/alexanderwallin/node-gettext.git"
   },
   "scripts": {
+    "fmt": "prettier -w ./lib",
     "test": "grunt",
     "docs": "jsdoc2md -f lib/gettext.js -t docs/README.template.md --partial docs/templates/*.hbs --param-list-format list > README.md"
   },
@@ -39,6 +40,7 @@
     "grunt-contrib-jshint": "^1.0.0",
     "grunt-mocha-test": "^0.12.7",
     "mocha": "^7.1.1",
+    "prettier": "^3.7.4",
     "sinon": "^9.0.1"
   },
   "engine": {
