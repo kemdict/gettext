@@ -11,7 +11,7 @@ cf. https://github.com/postalsys/gettext/commit/63e627cece1592d03abadf36044c957b
 
 I want to take the approach of using Maps instead though.
 
-* Add sprintf-js integration
+* CANCELLED Add sprintf-js integration
 
 Being able to do
 
@@ -24,7 +24,9 @@ ngettext(
 ),
 #+end_src
 
-is not only nice to have, it is necessary.
++is not only nice to have, it is necessary.+
+
+2025-12-28T00:44:38+0900: Actually, no, even upstream gettext is used like =printf(_("format string %s"), arg)=, the gettext call itself doesn't embed the sprintf formatting.
 
 * Getting locale; locale fallback logic; reading locale from environment
 

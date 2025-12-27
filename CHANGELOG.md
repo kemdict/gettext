@@ -8,6 +8,7 @@ The plan is to move away from Grunt, move to node:test and node:assert, do the r
 
 ### Changes
 
+- Remove .addTranslations in favor of passing translations in in the constructor, because adding translations dynamically at runtime sounds like trouble
 - Add .getLocales to allow hacking on selecting locale based on what is available
 - Remove functions that node-gettext already deprecated
 - Add more types

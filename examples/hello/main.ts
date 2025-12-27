@@ -5,19 +5,26 @@ import fs from "node:fs";
 import path from "node:path";
 import { sprintf } from "sprintf-js";
 
-function loadTranslations(gt: Gettext) {
+import type { GetTextTranslations } from "gettext-parser";
+type Catalog = Record<string, GetTextTranslations>;
+
+function loadTranslations() {
     const podir = path.join(import.meta.dirname, "po");
+    const catalogs: Record<string, Catalog> = {};
     for (const file of fs.readdirSync(podir)) {
         if (file.endsWith(".po")) {
             const translations = po.parse(
                 fs.readFileSync(path.join(podir, file)),
             );
-            gt.addTranslations(file.slice(0, -3), "messages", translations);
+            catalogs[file.slice(0, -3)] = { messages: translations };
         }
     }
+    return catalogs;
 }
-const gt = new Gettext();
-loadTranslations(gt);
+const gt = new Gettext({
+    translations: loadTranslations(),
+});
+
 // TODO: for a cli app, how to read this from the environment?
 // LANGUAGE, LC_ALL, LC_MESSAGES, LANG
 // TODO: fallback. Catalog should probably not be per Gettext instance.

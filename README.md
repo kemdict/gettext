@@ -30,7 +30,7 @@ There are two main differences between `node-gettext` and GNU's gettext:
 1. **There are no categories.** GNU gettext features [categories such as `LC_MESSAGES`, `LC_NUMERIC` and `LC_MONETARY`](https://www.gnu.org/software/gettext/manual/gettext.html#Locale-Environment-Variables), but since there already is a plethora of great JavaScript libraries to deal with numbers, currencies, dates etc, `node-gettext` is simply targeted towards strings/phrases. You could say it just assumes the `LC_MESSAGES` category at all times.
 2. **You have to read translation files from the file system yourself.** GNU gettext is a C library that reads files from the file system. This is done using `bindtextdomain(domain, localesDirPath)` and `setlocale(category, locale)`, where these four parameters combined are used to read the appropriate translations file.
 
-  However, since `node-gettext` needs to work both on the server in web browsers (which usually is referred to as it being *universal* or *isomorphic* JavaScript), it is up to the developer to read translation files from disk or somehow provide it with translations as pure JavaScript objects using [`addTranslations(locale, domain, translations)`](#gettextsetlocalelocale).
+  However, since `node-gettext` needs to work both on the server in web browsers (which usually is referred to as it being *universal* or *isomorphic* JavaScript), it is up to the developer to read translation files from disk or somehow provide it with translations then pass them in in the constructor.
 
   `bindtextdomain` will be provided as an optional feature in a future release.
 
@@ -48,8 +48,13 @@ npm install --save node-gettext
 import Gettext from 'node-gettext'
 import swedishTranslations from './translations/sv-SE.json'
 
-const gt = new Gettext()
-gt.addTranslations('sv-SE', 'messages', swedishTranslations)
+const gt = new Gettext({
+  translations: {
+    'sv-SE': {
+      messages: swedishTranslations
+    }
+  }
+})
 gt.setLocale('sv-SE')
 
 gt.gettext('The world is a funny place')
@@ -86,15 +91,18 @@ const translationsDir = 'path/to/locales'
 const locales = ['en', 'fi-FI', 'sv-SE']
 const domain = 'messages'
 
-const gt = new Gettext()
+const gt = new Gettext({
+  translations: (() => {
+    const catalog = {}
+    locales.forEach((locale) => {
+      const fileName = `${domain}.po`
+      const translationsFilePath = path.join(translationsDir, locale, fileName)
+      const translationsContent = fs.readFileSync(translationsFilePath)
 
-locales.forEach((locale) => {
-    const fileName = `${domain}.po`
-    const translationsFilePath = path.join(translationsDir, locale, fileName)
-    const translationsContent = fs.readFileSync(translationsFilePath)
-
-    const parsedTranslations = po.parse(translationsContent)
-    gt.addTranslations(locale, domain, parsedTranslations)
+      const parsedTranslations = po.parse(translationsContent)
+      catalog[locale] = { [domain]: parsedTranslations }
+    })
+  })()
 })
 ```
 
@@ -109,7 +117,6 @@ locales.forEach((locale) => {
     * [new Gettext([options])](#new_Gettext_new)
     * [.on(eventName, callback)](#Gettext+on)
     * [.off(eventName, callback)](#Gettext+off)
-    * [.addTranslations(locale, domain, translations)](#Gettext+addTranslations)
     * [.setLocale(locale)](#Gettext+setLocale)
     * [.getLocales()](#Gettext+getLocales)
     * [.setTextDomain(domain)](#Gettext+setTextDomain)
@@ -147,19 +154,6 @@ Removes an event listener.
 
 - eventName: An event name
 - callback: A previously registered event handler function
-
-<a name="Gettext+addTranslations"></a>
-### gettext.addTranslations(locale, domain, translations)
-Stores a set of translations in the set of gettext catalogs.
-
-- `locale`: A locale string
-- `domain`: Name of a domain. Most likely this would be "messages".
-- `translations`: an object in the shape of gettext-parser's <code>GetTextTranslations</code>.
-
-**Example**  
-```js
-gt.addTranslations('sv-SE', 'messages', translationsObject)
-```
 
 <a name="Gettext+setLocale"></a>
 ### gettext.setLocale(locale)
