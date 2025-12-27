@@ -121,118 +121,95 @@ locales.forEach((locale) => {
     * ~~[.addTextdomain()](#Gettext+addTextdomain)~~
 
 <a name="new_Gettext_new"></a>
-
 ### new Gettext([options])
-Creates and returns a new Gettext instance.
 
-**Returns**: <code>Object</code> - A Gettext instance
-**Params**
+Create a new Gettext instance.
 
-- `[options]`: <code>Object</code> - A set of options
-    - `.sourceLocale`: <code>String</code> - The locale that the source code and its texts are written in. Translations for this locale is not necessary.
-    - `.debug`: <code>Boolean</code> - Whether to output debug info into the
-                                 console.
+Options:
+
+- sourceLocale (string, optional): the locale the text in source code is written in.
+- debug (boolean, optionsl): whether to output debug info.
 
 <a name="Gettext+on"></a>
-
 ### gettext.on(eventName, callback)
 Adds an event listener.
 
-**Params**
-
-- `eventName`: <code>String</code> - An event name
-- `callback`: <code>function</code> - An event handler function
+- eventName: which event the callback should be called on. There is only one event at the moment, `error`.
+- callback: the function to be called on the event. In the case of `error`, it gets passed an error object.
 
 <a name="Gettext+off"></a>
-
 ### gettext.off(eventName, callback)
 Removes an event listener.
 
-**Params**
-
-- `eventName`: <code>String</code> - An event name
-- `callback`: <code>function</code> - A previously registered event handler function
+- eventName: An event name
+- callback: A previously registered event handler function
 
 <a name="Gettext+addTranslations"></a>
-
 ### gettext.addTranslations(locale, domain, translations)
-Stores a set of translations in the set of gettext
-catalogs.
+Stores a set of translations in the set of gettext catalogs.
 
-**Params**
-
-- `locale`: <code>String</code> - A locale string
-- `domain`: <code>String</code> - A domain name
-- `translations`: <code>Object</code> - An object of gettext-parser JSON shape
+- `locale`: A locale string
+- `domain`: Name of a domain. Most likely this would be "messages".
+- `translations`: an object in the shape of gettext-parser's <code>GetTextTranslations</code>.
 
 **Example**  
 ```js
 gt.addTranslations('sv-SE', 'messages', translationsObject)
 ```
-<a name="Gettext+setLocale"></a>
 
+<a name="Gettext+setLocale"></a>
 ### gettext.setLocale(locale)
-Sets the locale to get translated messages for.
+Sets the current locale to get translated messages for.
+
+Like any global state, be wary of modifying this per request. Consider creating a new instance instead of using setLocale.
 
 **Params**
 
-- `locale`: <code>String</code> - A locale
+- `locale`: <code>string</code> - A locale
 
 **Example**  
 ```js
 gt.setLocale('sv-SE')
 ```
-<a name="Gettext+setTextDomain"></a>
 
+### gettext.setlocale()
+C-style alias for [setLocale](#gettextsetlocalelocale).
+
+<a name="Gettext+setTextDomain"></a>
 ### gettext.setTextDomain(domain)
-Sets the default gettext domain.
+Sets the current gettext domain.
 
 **Params**
-
 - `domain`: <code>String</code> - A gettext domain name
 
 **Example**  
 ```js
 gt.setTextDomain('domainname')
 ```
+
+### gettext.textdomain()
+C-style alias for [setTextDomain](#gettextsettextdomaindomain).
+
 <a name="Gettext+gettext"></a>
+### gettext.gettext(msgid)
+Return the translated string for `msgid` using the current locale in the current domain.
 
-### gettext.gettext(msgid) ⇒ <code>String</code>
-Translates a string using the default textdomain
+If no translation was found, return the original string.
 
-**Returns**: <code>String</code> - Translation or the original string if no translation was found  
-**Params**
-
-- `msgid`: <code>String</code> - String to be translated
-
-**Example**  
+**Example**
 ```js
 gt.gettext('Some text')
 ```
-<a name="Gettext+dgettext"></a>
 
-### gettext.dgettext(domain, msgid) ⇒ <code>String</code>
+<a name="Gettext+dgettext"></a>
+### gettext.dgettext(domain, msgid)
 Translates a string using a specific domain
 
-**Returns**: <code>String</code> - Translation or the original string if no translation was found  
-**Params**
-
-- `domain`: <code>String</code> - A gettext domain name
-- `msgid`: <code>String</code> - String to be translated
-
-**Example**  
-```js
-gt.dgettext('domainname', 'Some text')
-```
 <a name="Gettext+ngettext"></a>
+### gettext.ngettext(msgid, msgidPlural, count)
+Translates a plural string using the current domain.
 
-### gettext.ngettext(msgid, msgidPlural, count) ⇒ <code>String</code>
-Translates a plural string using the default textdomain
-
-**Returns**: <code>String</code> - Translation or the original string if no translation was found  
-**Params**
-
-- `msgid`: <code>String</code> - String to be translated when count is not plural
+- `msgid`: <code>String</code> - String to be translated when count is singular
 - `msgidPlural`: <code>String</code> - String to be translated when count is plural
 - `count`: <code>Number</code> - Number count for the plural
 
@@ -240,13 +217,10 @@ Translates a plural string using the default textdomain
 ```js
 gt.ngettext('One thing', 'Many things', numberOfThings)
 ```
+
 <a name="Gettext+dngettext"></a>
-
-### gettext.dngettext(domain, msgid, msgidPlural, count) ⇒ <code>String</code>
+### gettext.dngettext(domain, msgid, msgidPlural, count)
 Translates a plural string using a specific textdomain
-
-**Returns**: <code>String</code> - Translation or the original string if no translation was found  
-**Params**
 
 - `domain`: <code>String</code> - A gettext domain name
 - `msgid`: <code>String</code> - String to be translated when count is not plural
@@ -257,25 +231,23 @@ Translates a plural string using a specific textdomain
 ```js
 gt.dngettext('domainname', 'One thing', 'Many things', numberOfThings)
 ```
-<a name="Gettext+pgettext"></a>
 
-### gettext.pgettext(msgctxt, msgid) ⇒ <code>String</code>
+<a name="Gettext+pgettext"></a>
+### gettext.pgettext(msgctxt, msgid)
 Translates a string from a specific context using the default textdomain
 
-**Returns**: <code>String</code> - Translation or the original string if no translation was found  
-**Params**
-
-- `msgctxt`: <code>String</code> - Translation context
-- `msgid`: <code>String</code> - String to be translated
+- `msgctxt`: <code>string</code> - Translation context
+- `msgid`: <code>string</code> - String to be translated
 
 **Example**  
 ```js
-gt.pgettext('sports', 'Back')
+gt.pgettext('in:menu', 'Back')
 ```
+
 <a name="Gettext+dpgettext"></a>
 
-### gettext.dpgettext(domain, msgctxt, msgid) ⇒ <code>String</code>
-Translates a string from a specific context using s specific textdomain
+### gettext.dpgettext(domain, msgctxt, msgid)
+Translates a string from a specific context using a specific textdomain
 
 **Returns**: <code>String</code> - Translation or the original string if no translation was found  
 **Params**
@@ -288,9 +260,9 @@ Translates a string from a specific context using s specific textdomain
 ```js
 gt.dpgettext('domainname', 'sports', 'Back')
 ```
-<a name="Gettext+npgettext"></a>
 
-### gettext.npgettext(msgctxt, msgid, msgidPlural, count) ⇒ <code>String</code>
+<a name="Gettext+npgettext"></a>
+### gettext.npgettext(msgctxt, msgid, msgidPlural, count)
 Translates a plural string from a specific context using the default textdomain
 
 **Returns**: <code>String</code> - Translation or the original string if no translation was found  
@@ -305,8 +277,8 @@ Translates a plural string from a specific context using the default textdomain
 ```js
 gt.npgettext('sports', 'Back', '%d backs', numberOfBacks)
 ```
-<a name="Gettext+dnpgettext"></a>
 
+<a name="Gettext+dnpgettext"></a>
 ### gettext.dnpgettext(domain, msgctxt, msgid, msgidPlural, count) ⇒ <code>String</code>
 Translates a plural string from a specifi context using a specific textdomain
 
@@ -323,26 +295,6 @@ Translates a plural string from a specifi context using a specific textdomain
 ```js
 gt.dnpgettext('domainname', 'sports', 'Back', '%d backs', numberOfBacks)
 ```
-<a name="Gettext+textdomain"></a>
-
-### gettext.textdomain()
-C-style alias for [setTextDomain](#gettextsettextdomaindomain)
-
-**See**: Gettext#setTextDomain  
-<a name="Gettext+setlocale"></a>
-
-### gettext.setlocale()
-C-style alias for [setLocale](#gettextsetlocalelocale)
-
-**See**: Gettext#setLocale  
-<a name="Gettext+addTextdomain"></a>
-
-### ~~gettext.addTextdomain()~~
-***Deprecated***
-
-This function will be removed in the final 2.0.0 release.
-
-
 
 ## Migrating from v1 to v2
 
@@ -363,7 +315,6 @@ Here is a full list of all breaking changes:
 ## License
 
 MIT
-
 
 ## See also
 
