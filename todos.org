@@ -1,0 +1,10 @@
+#+title: Todos
+
+* CI and testing
+** move to node:test and node:assert
+** github actions workflow
+* fix prototype pollution
+
+cf. https://github.com/postalsys/gettext/commit/63e627cece1592d03abadf36044c957b801c7315
+
+I want to take the approach of using Maps instead though.

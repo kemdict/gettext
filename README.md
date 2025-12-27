@@ -1,32 +1,14 @@
+# @kemdict/gettext
 
-<p align="center">
- <img src="https://raw.githubusercontent.com/alexanderwallin/node-gettext/master/docs/node-gettext-logo.png" width="160" height="160" />
-</p>
+A fork of [node-gettext](https://github.com/alexanderwallin/node-gettext). The hope is to add more stuff to the runtime behavior of node-gettext, as well as add extraction features.
 
-<h1 align="center">
- node-gettext
-</h1>
+The main use is for [Kemdict](https://github.com/kemdict/kemdict).
 
-[![Build Status](https://travis-ci.org/alexanderwallin/node-gettext.svg?branch=master)](http://travis-ci.org/alexanderwallin/node-gettext)
-[![npm version](https://badge.fury.io/js/node-gettext.svg)](https://badge.fury.io/js/node-gettext)
+The design of not directly depending on gettext-parser will be kept.
 
-**`node-gettext`** is a JavaScript implementation of (a large subset of) [gettext](https://www.gnu.org/software/gettext/gettext.html), a localization framework originally written in C.
+The rest is from node-gettext's README; I'll rewrite it later.
 
-If you just want to parse or compile mo/po files, for use with this library or elsewhere, check out [gettext-parser](https://github.com/smhg/gettext-parser).
-
-**NOTE:** This is the README for v2 of node-gettext, which introduces several braking changes. You can find the [README for v1 here](https://github.com/alexanderwallin/node-gettext/blob/master/docs/v1/README.md).
-
-* [Features](#features)
-  * [Differences from GNU gettext](#differences-from-gnu-gettext)
-* [Installation](#installation)
-* [Usage](#usage)
-  * [Error events](#error-events)
-  * [Recipes](#recipes)
-* [API](#api)
-* [Migrating from v1 to v2](#migrating-from-v1-to-v2)
-* [License](#license)
-* [See also](#see-also)
-
+---
 
 ## Features
 
@@ -36,7 +18,6 @@ If you just want to parse or compile mo/po files, for use with this library or e
 * Change locale or domain on the fly
 * Useful error messages enabled by a `debug` option
 * Emits events for internal errors, such as missing translations
-
 
 ### Differences from GNU gettext
 
