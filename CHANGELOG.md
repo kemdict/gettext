@@ -8,7 +8,8 @@ The plan is to move away from Grunt, move to node:test and node:assert, do the r
 
 ### Changes
 
-- Use optional chaining instead of lodash.get. This raises Node requirement to 14+ ([for optional chaining](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Optional_chaining#browser_compatibility)).
+- Use [optional chaining](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Optional_chaining#browser_compatibility) instead of lodash.get
+- Be an ES module
 
 ### Project changes
 
