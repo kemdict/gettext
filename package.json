@@ -29,7 +29,9 @@
     }
   ],
   "devDependencies": {
+    "@types/gettext-parser": "^8.0.0",
     "@types/node": "^25.0.3",
+    "gettext-parser": "^9.0.0",
     "prettier": "^3.7.4",
     "sinon": "^9.0.1"
   },
