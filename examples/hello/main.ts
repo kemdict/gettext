@@ -44,8 +44,6 @@ const helptext = _(`
 Options:
 
 --upper: Upcase message before showing
---lower: Downcase message before showing
---help: Show help (this message)
 `);
 
 const parsedArgs = parseArgs({
@@ -53,8 +51,6 @@ const parsedArgs = parseArgs({
     args: process.argv.slice(2),
     options: {
         help: { type: "boolean", short: "h" },
-        upper: { type: "boolean", short: "u" },
-        lower: { type: "boolean", short: "l" },
     },
 });
 if (parsedArgs.values.help) {

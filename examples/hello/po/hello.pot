@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-27 22:45+0900\n"
+"POT-Creation-Date: 2025-12-27 23:13+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: main.ts:23
+#: main.ts:39
 msgid ""
 "\n"
 "@kemdict/gettext hello example - show hello world\n"
@@ -28,15 +28,13 @@ msgid ""
 "Options:\n"
 "\n"
 "--upper: Upcase message before showing\n"
-"--lower: Downcase message before showing\n"
-"--help: Show help (this message)\n"
 msgstr ""
 
-#: main.ts:47
+#: main.ts:59
 msgid "Hello world!"
 msgstr ""
 
-#: main.ts:51
+#: main.ts:63
 #, javascript-format
 msgid "You provided %s positional argument."
 msgid_plural "You provided %s positional arguments."
