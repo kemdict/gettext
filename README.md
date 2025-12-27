@@ -107,6 +107,7 @@ locales.forEach((locale) => {
     * [.off(eventName, callback)](#Gettext+off)
     * [.addTranslations(locale, domain, translations)](#Gettext+addTranslations)
     * [.setLocale(locale)](#Gettext+setLocale)
+    * [.getLocales()](#Gettext+getLocales)
     * [.setTextDomain(domain)](#Gettext+setTextDomain)
     * [.gettext(msgid)](#Gettext+gettext) ⇒ <code>String</code>
     * [.dgettext(domain, msgid)](#Gettext+dgettext) ⇒ <code>String</code>
@@ -118,7 +119,6 @@ locales.forEach((locale) => {
     * [.dnpgettext(domain, msgctxt, msgid, msgidPlural, count)](#Gettext+dnpgettext) ⇒ <code>String</code>
     * [.textdomain()](#Gettext+textdomain)
     * [.setlocale()](#Gettext+setlocale)
-    * ~~[.addTextdomain()](#Gettext+addTextdomain)~~
 
 <a name="new_Gettext_new"></a>
 ### new Gettext([options])
@@ -174,6 +174,10 @@ gt.setLocale('sv-SE')
 
 ### gettext.setlocale()
 C-style alias for [setLocale](#gettextsetlocalelocale).
+
+<a name="Gettext+getLocales"></a>
+### gettext.getLocales(locale)
+Return all locales in the catalog.
 
 <a name="Gettext+setTextDomain"></a>
 ### gettext.setTextDomain(domain)
