@@ -46,3 +46,9 @@ const { _, ngettext } = gt.bindLocale("pt_BR")
 then these returned functions can effectively have the locale as their own state, instead of relying on state in the class. This should eliminate the need to have more than one instance of the Gettext class, even for server applications.
 
 * Example project / sandboxes for Astro, SvelteKit
+* Extraction command
+
+Extract from ts/js/tsx/jsx, as well as Astro or Svelte (or others) as long as their compile-to-JS packages are installed, as well as support supplying custom functions.
+
+* examples(astro)
+** specify language via astro:i18n
