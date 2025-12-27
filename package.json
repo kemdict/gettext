@@ -1,18 +1,13 @@
 {
-  "name": "node-gettext",
+  "name": "@kemdict/gettext",
   "description": "A JavaScript implementation of gettext, a localization framework",
-  "version": "3.0.0",
+  "version": "0.0.1",
   "author": "Andris Reinman",
-  "maintainers": [
-    {
-      "name": "Alexander Wallin",
-      "email": "office@alexanderwallin.com"
-    }
-  ],
-  "homepage": "http://github.com/alexanderwallin/node-gettext",
+  "maintainers": ["Kisaragi Hiu"],
+  "homepage": "http://github.com/kemdict/gettext",
   "repository": {
     "type": "git",
-    "url": "http://github.com/alexanderwallin/node-gettext.git"
+    "url": "http://github.com/kemdict/gettext.git"
   },
   "scripts": {
     "fmt": "prettier -w ./lib",
@@ -27,7 +22,7 @@
   "licenses": [
     {
       "type": "MIT",
-      "url": "http://github.com/alexanderwallin/node-gettext/blob/master/LICENSE"
+      "url": "http://github.com/kemdict/gettext/blob/master/LICENSE"
     }
   ],
   "dependencies": {
