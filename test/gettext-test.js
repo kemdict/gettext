@@ -455,22 +455,4 @@ describe("Gettext", function () {
             assert.equal(errorListenersourceLocale.mock.callCount(), 0);
         });
     });
-
-    describe("Aliases", function () {
-        it("should forward textdomain(domain) to setTextDomain(domain)", function (ctx) {
-            ctx.mock.method(gt, "setTextDomain");
-            gt.textdomain("messages");
-            // @ts-expect-error
-            assert.deepEqual(gt.setTextDomain.mock.calls[0].arguments, [
-                "messages",
-            ]);
-        });
-
-        it("should forward setlocale(locale) to setLocale(locale)", function (ctx) {
-            ctx.mock.method(gt, "setLocale");
-            gt.setLocale("et-EE");
-            // @ts-expect-error
-            assert.deepEqual(gt.setLocale.mock.calls[0].arguments, ["et-EE"]);
-        });
-    });
 });

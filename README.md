@@ -23,7 +23,13 @@ The rest is from node-gettext's README; I'll rewrite it later.
 * Useful error messages enabled by a `debug` option
 * Emits events for internal errors, such as missing translations
 
+### Differences from node-gettext
+
+TODO
+
 ### Differences from GNU gettext
+
+(TODO. This is from node-gettext.)
 
 There are two main differences between `node-gettext` and GNU's gettext:
 
@@ -128,8 +134,6 @@ const gt = new Gettext({
     * [.dpgettext(domain, msgctxt, msgid)](#Gettext+dpgettext) ⇒ <code>String</code>
     * [.npgettext(msgctxt, msgid, msgidPlural, count)](#Gettext+npgettext) ⇒ <code>String</code>
     * [.dnpgettext(domain, msgctxt, msgid, msgidPlural, count)](#Gettext+dnpgettext) ⇒ <code>String</code>
-    * [.textdomain()](#Gettext+textdomain)
-    * [.setlocale()](#Gettext+setlocale)
 
 <a name="new_Gettext_new"></a>
 ### new Gettext([options])
@@ -170,9 +174,6 @@ Like any global state, be wary of modifying this per request. Consider creating 
 gt.setLocale('sv-SE')
 ```
 
-### gettext.setlocale()
-C-style alias for [setLocale](#gettextsetlocalelocale).
-
 <a name="Gettext+getLocales"></a>
 ### gettext.getLocales(locale)
 Return all locales in the catalog.
@@ -188,9 +189,6 @@ Sets the current gettext domain.
 ```js
 gt.setTextDomain('domainname')
 ```
-
-### gettext.textdomain()
-C-style alias for [setTextDomain](#gettextsettextdomaindomain).
 
 <a name="Gettext+gettext"></a>
 ### gettext.gettext(msgid)
