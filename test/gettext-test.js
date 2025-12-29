@@ -6,16 +6,6 @@ import assert from "node:assert/strict";
 import { describe, beforeEach, it, mock } from "node:test";
 import { po } from "gettext-parser";
 
-import { getLanguageCode } from "../lib/private.js";
-describe("Private", () => {
-    describe("getLanguageCode", function () {
-        it("should normalize locale string", function () {
-            assert.equal(getLanguageCode("ab-cd_ef.utf-8"), "ab");
-            assert.equal(getLanguageCode("ab-cd_ef"), "ab");
-        });
-    });
-});
-
 describe("Plurals", () => {
     it("should handle KDE Ukrainian fine", () => {
         const gt = new Gettext({
