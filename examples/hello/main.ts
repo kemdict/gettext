@@ -24,10 +24,7 @@ function loadTranslations() {
 const gt = new Gettext({
     translations: loadTranslations(),
 });
-gt.setFirstAvailableLocale(guessLocale());
-
-const _ = gt.gettext.bind(gt);
-const ngettext = gt.ngettext.bind(gt);
+const { _, ngettext } = gt.bindLocale(guessLocale());
 
 const helptext = _(`
 @kemdict/gettext hello example - show hello world

@@ -4,11 +4,12 @@
 
 ### Changes
 
+- Instead of setLocale and setTextDomain, use the new `bindLocale` function to get functions that translate to the given locale(s) (and domain). These functions can be used standalone. This removes state from the Gettext instance itself and makes races against `setLocale` impossible.
 - Use a Map to store catalogs in the class. This should remove any concerns of prototype pollution, even though the translations being registered really are supposed to be trusted input. The types are clearer this way anyways. (Another approach to fix this is seen in [postalsys/gettext](https://github.com/postalsys/gettext/commit/63e627cece1592d03abadf36044c957b801c7315).)
 
 ### Removals
 
-- Remove C-style `.textdomain` and `.setlocale`. `.textdomain` is a confusing name (does it set a state? declare a textdomain?), and when we have `.setTextDomain` already we should just use that. If this library were more similar to GNU Gettext this might work better, but it isn't. With `.textdomain` gone there is also no point in leaving `.setlocale` (lowercase) in.
+- Remove `.setLocale` and `.setTextDomain` and their C-style aliases in favor of the new `.bindLocale`
 
 ### Project changes
 

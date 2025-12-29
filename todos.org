@@ -27,7 +27,11 @@ ngettext(
 - We should read LANGUAGE, LC_ALL, LC_MESSAGES, LANG in that order (except if LANG is C then always return msgid)
 - We need a way to specify the current locale per request. This probably means splitting catalog from the gettext instance.
 
-* “multithreaded” locale
+* TODO use bindLocale in examples
+:PROPERTIES:
+:created:  2025-12-30T06:01:56+0900
+:END:
+* DONE “multithreaded” locale
 
 We need to check what bindtextdomain does. Also is there a bindlocale in the C/++ library?
 

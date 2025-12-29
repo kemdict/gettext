@@ -1,3 +1,6 @@
+run:
+	node main.ts
+
 extract:
 	xgettext main.ts -o po/hello.pot
 

@@ -61,9 +61,9 @@ const gt = new Gettext({
     }
   }
 })
-gt.setLocale('sv-SE')
+const { gettext } = gt.bindLocale('sv-SE')
 
-gt.gettext('The world is a funny place')
+gettext('The world is a funny place')
 // -> "Världen är en underlig plats"
 ```
 
@@ -73,7 +73,7 @@ gt.gettext('The world is a funny place')
 // Add translations etc...
 
 gt.on('error', error => console.log('oh nose', error))
-gt.gettext('An unrecognized message')
+gettext('An unrecognized message')
 // -> 'oh nose', 'An unrecognized message'
 ```
 
@@ -123,9 +123,8 @@ const gt = new Gettext({
     * [new Gettext([options])](#new_Gettext_new)
     * [.on(eventName, callback)](#Gettext+on)
     * [.off(eventName, callback)](#Gettext+off)
-    * [.setLocale(locale)](#Gettext+setLocale)
+    * [.bindLocale(locales, domain)](#Gettext+bindLocale)
     * [.getLocales()](#Gettext+getLocales)
-    * [.setTextDomain(domain)](#Gettext+setTextDomain)
     * [.gettext(msgid)](#Gettext+gettext) ⇒ <code>String</code>
     * [.dgettext(domain, msgid)](#Gettext+dgettext) ⇒ <code>String</code>
     * [.ngettext(msgid, msgidPlural, count)](#Gettext+ngettext) ⇒ <code>String</code>
@@ -159,36 +158,25 @@ Removes an event listener.
 - eventName: An event name
 - callback: A previously registered event handler function
 
-<a name="Gettext+setLocale"></a>
-### gettext.setLocale(locale)
-Sets the current locale to get translated messages for.
-
-Like any global state, be wary of modifying this per request. Consider creating a new instance instead of using setLocale.
+<a name="Gettext+bindLocale"></a>
+### gettext.bindLocale(locales, domain)
+Return translator functions that translate into `locales`.
+If `locales` is a string, that's the locale used. If it's an array, the first one that is available in catalogs will be used.
+If none of the specified locales are translated in the catalogs, the returned functions will all simply return source strings as-is.
 
 **Params**
 
-- `locale`: <code>string</code> - A locale
+- `locales`: string or array of strings - A locale
+- `domain`: string - A domain, defaults to "messages"
 
 **Example**  
 ```js
-gt.setLocale('sv-SE')
+const { _ } = gt.bindLocale('sv-SE')
 ```
 
 <a name="Gettext+getLocales"></a>
 ### gettext.getLocales(locale)
 Return all locales in the catalog.
-
-<a name="Gettext+setTextDomain"></a>
-### gettext.setTextDomain(domain)
-Sets the current gettext domain.
-
-**Params**
-- `domain`: <code>String</code> - A gettext domain name
-
-**Example**  
-```js
-gt.setTextDomain('domainname')
-```
 
 <a name="Gettext+gettext"></a>
 ### gettext.gettext(msgid)
