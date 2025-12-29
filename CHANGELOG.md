@@ -1,10 +1,10 @@
 # @kemdict/gettext Changelog
 
-## v0.0.1 (unreleased)
+## v0.0.1 (2025-12-30)
 
-- First forked version
+First forked version.
 
-The plan is to move away from Grunt, move to node:test and node:assert, do the rename, etc.
+This version is tagged, but the release pipeline hasn't actually been set up. There's even a chance that this ends up published under my personal npm scope and not Kemdict's. But the changelog is getting annoyingly large, so I felt I should just mark it now.
 
 ### Changes
 
