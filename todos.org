@@ -2,9 +2,9 @@
 
 * CI and testing
 ** DONE move to node:test and node:assert
-** Move away from simon
+** DONE Move away from simon
 ** github actions workflow
-* Fix plurals handling
+* DONE Fix plurals handling
 * fix prototype pollution
 
 cf. https://github.com/postalsys/gettext/commit/63e627cece1592d03abadf36044c957b801c7315

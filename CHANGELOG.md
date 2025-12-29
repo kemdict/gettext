@@ -8,6 +8,8 @@ The plan is to move away from Grunt, move to node:test and node:assert, do the r
 
 ### Changes
 
+- Try to use the plural forms defined in the PO file. Fallback to using the locale to guess the plural forms only if it isn't found. When using locale to guess, also allow matching on regions, and add a default for Brazilian Portuguese.
+  - This should fix [alexanderwallin/node-gettext#70](https://github.com/alexanderwallin/node-gettext/issues/70).
 - Add guessLocale() to guess locale based on environment variables like GNU Gettext does.
 - Add .setFirstAvailableLocale to allow passing in a list of preferred locales and using the first that is available in the catalogs
 - Remove .addTranslations in favor of passing translations in in the constructor, because adding translations dynamically at runtime sounds like trouble

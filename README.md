@@ -18,8 +18,8 @@ The rest is from node-gettext's README; I'll rewrite it later.
 
 * Supports domains, contexts and plurals
 * Supports .json, .mo and .po files with the help of [gettext-parser](https://github.com/smhg/gettext-parser)
-* Ships with plural forms for 136 languages
-* Change locale or domain on the fly
+* Use plural forms from the PO file, with fallback for 137 languages
+* ~~Change locale or domain on the fly~~ to be figured out later
 * Useful error messages enabled by a `debug` option
 * Emits events for internal errors, such as missing translations
 
