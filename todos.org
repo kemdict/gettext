@@ -45,6 +45,8 @@ const { _, ngettext } = gt.bindLocale("pt_BR")
 
 then these returned functions can effectively have the locale as their own state, instead of relying on state in the class. This should eliminate the need to have more than one instance of the Gettext class, even for server applications.
 
+The main object should load the catalog (either from options or from reading files), then there should be a function for returning functions that have bound to a given locale.
+
 * Example project / sandboxes for Astro, SvelteKit
 * Extraction command
 
