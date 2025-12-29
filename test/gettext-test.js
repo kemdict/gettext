@@ -4,6 +4,7 @@ import Gettext from "../lib/gettext.js";
 import fs from "node:fs";
 import assert from "node:assert/strict";
 import { describe, beforeEach, it, mock } from "node:test";
+import { po } from "gettext-parser";
 
 import { getLanguageCode } from "../lib/private.js";
 describe("Private", () => {
@@ -12,6 +13,61 @@ describe("Private", () => {
             assert.equal(getLanguageCode("ab-cd_ef.utf-8"), "ab");
             assert.equal(getLanguageCode("ab-cd_ef"), "ab");
         });
+    });
+});
+
+describe("Plurals", () => {
+    it("should handle KDE Ukrainian fine", () => {
+        const gt = new Gettext({
+            translations: {
+                uk: {
+                    messages: po.parse(
+                        fs.readFileSync(
+                            import.meta.dirname + "/fixtures/dolphin-uk.po",
+                            {
+                                encoding: "utf-8",
+                            },
+                        ),
+                    ),
+                },
+            },
+        });
+        gt.setLocale("uk");
+        /** @param {number} count */
+        function testMsg1(count) {
+            return gt.npgettext(
+                "@action:inmenu Restore the selected files that are in the trash to the place " +
+                    "they lived at the moment they were trashed. Minimize the length of this " +
+                    "string if possible.",
+                "Restore to Former Location",
+                "Restore to Former Locations",
+                count,
+            );
+        }
+        assert.equal(testMsg1(0), "Відновити попередні місця");
+        assert.equal(testMsg1(1), "Відновити попереднє місце");
+        assert.equal(testMsg1(2), "Відновити попередні місця");
+        assert.equal(testMsg1(3), "Відновити попередні місця");
+        /** @param {number} count */
+        function testMsg2(count) {
+            return gt.ngettext(
+                "Are you sure you want to open 1 terminal window?",
+                "Are you sure you want to open %1 terminal windows?",
+                count,
+            );
+        }
+        assert.equal(
+            testMsg2(21),
+            "Ви справді хочете відкрити %1 вікно термінала?",
+        );
+        assert.equal(
+            testMsg2(1),
+            "Ви справді хочете відкрити вікно термінала?",
+        );
+        assert.equal(
+            testMsg2(24),
+            "Ви справді хочете відкрити %1 вікна термінала?",
+        );
     });
 });
 
