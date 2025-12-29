@@ -1,5 +1,13 @@
 # @kemdict/gettext Changelog
 
+## v0.0.2 (unreleased)
+
+### Changes
+
+- Use a Map to store catalogs in the class. This should remove any concerns of prototype pollution, even though the translations being registered really are supposed to be trusted input. The types are clearer this way anyways. (Another approach to fix this is seen in [postalsys/gettext](https://github.com/postalsys/gettext/commit/63e627cece1592d03abadf36044c957b801c7315).)
+
+### Project changes
+
 ## v0.0.1 (2025-12-30)
 
 First forked version.

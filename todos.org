@@ -5,12 +5,6 @@
 ** DONE Move away from simon
 ** github actions workflow
 * DONE Fix plurals handling
-* fix prototype pollution
-
-cf. https://github.com/postalsys/gettext/commit/63e627cece1592d03abadf36044c957b801c7315
-
-I want to take the approach of using Maps instead though.
-
 * CANCELLED Add sprintf-js integration
 
 Being able to do

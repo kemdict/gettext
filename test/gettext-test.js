@@ -92,10 +92,10 @@ describe("Gettext", function () {
                         },
                     },
                 });
-                assert.ok(gt.catalogs["et-EE"]);
-                assert.ok(gt.catalogs["et-EE"].messages);
+                assert.ok(gt.catalogs.get("et-EE"));
+                assert.ok(gt.catalogs.get("et-EE")?.messages);
                 assert.equal(
-                    gt.catalogs["et-EE"].messages.charset,
+                    gt.catalogs.get("et-EE")?.messages.charset,
                     "iso-8859-13",
                 );
             });
@@ -108,9 +108,9 @@ describe("Gettext", function () {
                     },
                 });
 
-                assert.ok(gt.catalogs["et-EE"].mydomain);
+                assert.ok(gt.catalogs.get("et-EE")?.mydomain);
                 assert.equal(
-                    gt.catalogs["et-EE"].mydomain.charset,
+                    gt.catalogs.get("et-EE")?.mydomain.charset,
                     "iso-8859-13",
                 );
             });
@@ -128,14 +128,19 @@ describe("Gettext", function () {
             });
 
             it("should reject non-string values", function () {
+                // @ts-expect-error
                 gtc = new Gettext({ sourceLocale: null });
                 assert.equal(gtc.sourceLocale, "");
+                // @ts-expect-error
                 gtc = new Gettext({ sourceLocale: 123 });
                 assert.equal(gtc.sourceLocale, "");
+                // @ts-expect-error
                 gtc = new Gettext({ sourceLocale: false });
                 assert.equal(gtc.sourceLocale, "");
+                // @ts-expect-error
                 gtc = new Gettext({ sourceLocale: {} });
                 assert.equal(gtc.sourceLocale, "");
+                // @ts-expect-error
                 gtc = new Gettext({ sourceLocale: function () {} });
                 assert.equal(gtc.sourceLocale, "");
             });
@@ -170,16 +175,22 @@ describe("Gettext", function () {
         });
 
         it("should reject non-string locales", function () {
+            // @ts-expect-error
             gt.setLocale(null);
             assert.equal(gt.locale, "");
+            // @ts-expect-error
             gt.setLocale(123);
             assert.equal(gt.locale, "");
+            // @ts-expect-error
             gt.setLocale(false);
             assert.equal(gt.locale, "");
+            // @ts-expect-error
             gt.setLocale(function () {});
             assert.equal(gt.locale, "");
+            // @ts-expect-error
             gt.setLocale(NaN);
             assert.equal(gt.locale, "");
+            // @ts-expect-error
             gt.setLocale();
             assert.equal(gt.locale, "");
         });
@@ -200,16 +211,22 @@ describe("Gettext", function () {
         });
 
         it("should reject non-string domains", function () {
+            // @ts-expect-error
             gt.setTextDomain(null);
             assert.equal(gt.domain, "messages");
+            // @ts-expect-error
             gt.setTextDomain(123);
             assert.equal(gt.domain, "messages");
+            // @ts-expect-error
             gt.setTextDomain(false);
             assert.equal(gt.domain, "messages");
+            // @ts-expect-error
             gt.setTextDomain(function () {});
             assert.equal(gt.domain, "messages");
+            // @ts-expect-error
             gt.setTextDomain(NaN);
             assert.equal(gt.domain, "messages");
+            // @ts-expect-error
             gt.setTextDomain();
             assert.equal(gt.domain, "messages");
         });
@@ -392,12 +409,14 @@ describe("Gettext", function () {
         });
 
         it("should notify a registered listener of error events", function () {
+            // @ts-expect-error
             gt.emit("error", "Something went wrong");
             assert.equal(errorListener.mock.callCount(), 1);
         });
 
         it("should deregister a previously registered event listener", function () {
             gt.off("error", errorListener);
+            // @ts-expect-error
             gt.emit("error", "Something went wrong");
             assert.equal(errorListener.mock.callCount(), 0);
         });
@@ -441,6 +460,7 @@ describe("Gettext", function () {
         it("should forward textdomain(domain) to setTextDomain(domain)", function (ctx) {
             ctx.mock.method(gt, "setTextDomain");
             gt.textdomain("messages");
+            // @ts-expect-error
             assert.deepEqual(gt.setTextDomain.mock.calls[0].arguments, [
                 "messages",
             ]);
@@ -449,6 +469,7 @@ describe("Gettext", function () {
         it("should forward setlocale(locale) to setLocale(locale)", function (ctx) {
             ctx.mock.method(gt, "setLocale");
             gt.setLocale("et-EE");
+            // @ts-expect-error
             assert.deepEqual(gt.setLocale.mock.calls[0].arguments, ["et-EE"]);
         });
     });
