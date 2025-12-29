@@ -18,10 +18,6 @@ function loadTranslations() {
     }
     return catalogs;
 }
-const gt = new Gettext({
+export const gt = new Gettext({
     translations: loadTranslations(),
 });
-gt.setLocale("zh_TW");
-
-export const _ = gt.gettext.bind(gt);
-export const ngettext = gt.ngettext.bind(gt);
