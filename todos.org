@@ -22,33 +22,32 @@ ngettext(
 
 2025-12-28T00:44:38+0900: Actually, no, even upstream gettext is used like =printf(_("format string %s"), arg)=, the gettext call itself doesn't embed the sprintf formatting.
 
+* Option to read catalogs from directory
+:PROPERTIES:
+:created:  2025-12-30T06:40:11+0900
+:END:
+
+Sure we can do it from the consumer's side, and sure we want the flexibility to load translations however we want, but it's also nice to be able to just specify a path and get everything loaded that way.
+
+This is kind of what bindtextdomain does. But because we want to load translations from the project instead of from the system wide message catalog location, it makes sense to deviate from bindtextdomain.
+
 * Getting locale; locale fallback logic; reading locale from environment
 
 - We should read LANGUAGE, LC_ALL, LC_MESSAGES, LANG in that order (except if LANG is C then always return msgid)
 - We need a way to specify the current locale per request. This probably means splitting catalog from the gettext instance.
 
-* TODO use bindLocale in examples
-:PROPERTIES:
-:created:  2025-12-30T06:01:56+0900
-:END:
-* DONE “multithreaded” locale
-
-We need to check what bindtextdomain does. Also is there a bindlocale in the C/++ library?
-
-Make a function that takes a locale and returns each localization function, like
-
-#+begin_src javascript
-const { _, ngettext } = gt.bindLocale("pt_BR")
-#+end_src
-
-then these returned functions can effectively have the locale as their own state, instead of relying on state in the class. This should eliminate the need to have more than one instance of the Gettext class, even for server applications.
-
-The main object should load the catalog (either from options or from reading files), then there should be a function for returning functions that have bound to a given locale.
-
-* Example project / sandboxes for Astro, SvelteKit
+* Example project / sandboxes for SvelteKit
 * Extraction command
 
 Extract from ts/js/tsx/jsx, as well as Astro or Svelte (or others) as long as their compile-to-JS packages are installed, as well as support supplying custom functions.
 
+* TODO examples(SPA, gettext runtime on client side)
+* TODO examples(sveltekit)
 * examples(astro)
 ** specify language via astro:i18n
+** static mode: i18n pages
+** server mode: auto redirect i18n
+** how should components get the context?
+Pages would need to somehow pass the context into components, either manually or with some state manager. Then each component can do bindLocale to get their own references to the translator functions with the right context. It's either that or passing the functions themselves, which also sounds messy.
+
+bindLocale seriously needs to not completely reinitialize the functions.
