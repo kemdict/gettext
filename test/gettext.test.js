@@ -1,6 +1,6 @@
 "use strict";
 
-import Gettext from "../lib/gettext.js";
+import Gettext, { guessEnvLocale } from "../lib/gettext.js";
 import fs from "node:fs";
 import assert from "node:assert/strict";
 import { describe, beforeEach, it, mock } from "node:test";
@@ -57,6 +57,68 @@ describe("Plurals", () => {
         assert.equal(
             testMsg2(24),
             "Ви справді хочете відкрити %1 вікна термінала?",
+        );
+    });
+});
+
+describe("guessEnvLocale", () => {
+    it("should have the expected order", () => {
+        assert.deepEqual(
+            guessEnvLocale({
+                LANGUAGE: "a:b:c",
+                LC_MESSAGES: "d",
+                LC_ALL: "e",
+                LANG: "f",
+            }),
+            ["a", "b", "c", "e", "d", "f"],
+        );
+        assert.deepEqual(
+            guessEnvLocale({
+                LANGUAGE: "ja:zh_TW:en",
+                LANG: "foo",
+            }),
+            ["ja", "zh_TW", "en", "foo"],
+        );
+    });
+    it("should respect $LANGUAGE", () => {
+        assert.deepEqual(
+            guessEnvLocale({
+                LANGUAGE: "ja:zh_TW:en",
+                LANG: "zh_TW",
+            }),
+            ["ja", "zh_TW", "en"],
+        );
+        assert.deepEqual(
+            guessEnvLocale({
+                LANGUAGE: "ja:zh_TW:en",
+                LANG: "foo",
+            }),
+            ["ja", "zh_TW", "en", "foo"],
+        );
+    });
+    it("should be empty if LANG is C or POSIX", () => {
+        assert.equal(
+            guessEnvLocale({
+                LANG: "C.UTF-8",
+                LC_ALL: "zh_TW",
+                LANGUAGE: "ja:zh_TW:en",
+            }),
+            undefined,
+        );
+        assert.equal(
+            guessEnvLocale({
+                LANG: "POSIX",
+                LC_ALL: "zh_TW",
+                LANGUAGE: "ja:zh_TW:en",
+            }),
+            undefined,
+        );
+        assert.equal(
+            guessEnvLocale({
+                LANG: "C",
+                LC_ALL: "zh_TW",
+            }),
+            undefined,
         );
     });
 });
@@ -436,8 +498,8 @@ describe("Gettext", function () {
         });
 
         it("should emit an error event when a translation is missing", function () {
-            const { gettext } = gt.bindLocale("et-EE");
-            gettext("This message is not translated");
+            const { _ } = gt.bindLocale("et-EE");
+            _("This message is not translated");
             assert.equal(errorListener.mock.callCount(), 1);
         });
 
