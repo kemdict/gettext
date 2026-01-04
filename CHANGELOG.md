@@ -13,6 +13,7 @@
 
 ### Project changes
 
+- Rename main test file to look better when there are multiple test files
 - Set up local coverage
 
 ## v0.0.1 (2025-12-30)
