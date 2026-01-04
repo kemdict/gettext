@@ -4,6 +4,7 @@
 
 ### Changes
 
+- Add another GNU Hello clone which directly reads GNU Hello's installed message catalogs on the system (if any)
 - Add a `loaders` module which provides functions for loading PO files from directories
 - Rename `guessLocale` to `guessEnvLocale`, and allow it to take an object instead of directly reading from process.env, making it easier to test.
 - Instead of setLocale and setTextDomain, use the new `bindLocale` function to get functions that translate to the given locale(s) (and domain). These functions can be used standalone. This removes state from the Gettext instance itself and makes races against `setLocale` impossible.
