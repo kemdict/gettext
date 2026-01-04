@@ -22,7 +22,7 @@ ngettext(
 
 2025-12-28T00:44:38+0900: Actually, no, even upstream gettext is used like =printf(_("format string %s"), arg)=, the gettext call itself doesn't embed the sprintf formatting.
 
-* Option to read catalogs from directory
+* DONE Option to read catalogs from directory
 :PROPERTIES:
 :created:  2025-12-30T06:40:11+0900
 :END:
@@ -31,7 +31,7 @@ Sure we can do it from the consumer's side, and sure we want the flexibility to 
 
 This is kind of what bindtextdomain does. But because we want to load translations from the project instead of from the system wide message catalog location, it makes sense to deviate from bindtextdomain.
 
-* Getting locale; locale fallback logic; reading locale from environment
+* DONE Getting locale; locale fallback logic; reading locale from environment
 
 - We should read LANGUAGE, LC_ALL, LC_MESSAGES, LANG in that order (except if LANG is C then always return msgid)
 - We need a way to specify the current locale per request. This probably means splitting catalog from the gettext instance.

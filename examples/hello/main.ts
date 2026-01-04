@@ -1,28 +1,12 @@
 import Gettext, { guessEnvLocale } from "@kemdict/gettext";
-import { po } from "gettext-parser";
+// TODO the export needs to be set up properly
+import { loadTranslations } from "../../lib/loaders.js";
 import { parseArgs } from "node:util";
-import fs from "node:fs";
 import path from "node:path";
 import { sprintf } from "sprintf-js";
 
-import type { GetTextTranslations } from "gettext-parser";
-type Catalog = Record<string, GetTextTranslations>;
-
-function loadTranslations() {
-    const podir = path.join(import.meta.dirname, "po");
-    const catalogs: Record<string, Catalog> = {};
-    for (const file of fs.readdirSync(podir)) {
-        if (file.endsWith(".po")) {
-            const translations = po.parse(
-                fs.readFileSync(path.join(podir, file)),
-            );
-            catalogs[file.slice(0, -3)] = { messages: translations };
-        }
-    }
-    return catalogs;
-}
 const gt = new Gettext({
-    translations: loadTranslations(),
+    translations: loadTranslations(path.join(import.meta.dirname, "po")),
 });
 const { _, ngettext } = gt.bindLocale(guessEnvLocale());
 
