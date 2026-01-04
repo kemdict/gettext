@@ -1,4 +1,4 @@
-import Gettext, { guessLocale } from "@kemdict/gettext";
+import Gettext, { guessEnvLocale } from "@kemdict/gettext";
 import { po } from "gettext-parser";
 import { parseArgs } from "node:util";
 import fs from "node:fs";
@@ -24,7 +24,7 @@ function loadTranslations() {
 const gt = new Gettext({
     translations: loadTranslations(),
 });
-const { _, ngettext } = gt.bindLocale(guessLocale());
+const { _, ngettext } = gt.bindLocale(guessEnvLocale());
 
 const helptext = _(`
 @kemdict/gettext hello example - show hello world

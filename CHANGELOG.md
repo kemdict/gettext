@@ -4,6 +4,7 @@
 
 ### Changes
 
+- Rename `guessLocale` to `guessEnvLocale`, and allow it to take an object instead of directly reading from process.env, making it easier to test.
 - Instead of setLocale and setTextDomain, use the new `bindLocale` function to get functions that translate to the given locale(s) (and domain). These functions can be used standalone. This removes state from the Gettext instance itself and makes races against `setLocale` impossible.
 - Use a Map to store catalogs in the class. This should remove any concerns of prototype pollution, even though the translations being registered really are supposed to be trusted input. The types are clearer this way anyways. (Another approach to fix this is seen in [postalsys/gettext](https://github.com/postalsys/gettext/commit/63e627cece1592d03abadf36044c957b801c7315).)
 
