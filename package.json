@@ -3,9 +3,7 @@
   "description": "A JavaScript implementation of gettext, a localization framework",
   "version": "0.0.1",
   "author": "Andris Reinman",
-  "maintainers": [
-    "Kisaragi Hiu"
-  ],
+  "maintainers": ["Kisaragi Hiu"],
   "homepage": "http://github.com/kemdict/gettext",
   "repository": {
     "type": "git",
@@ -15,13 +13,11 @@
   "scripts": {
     "fmt": "prettier -w ./lib",
     "test": "node --test",
+    "test:coverage": "node --test --experimental-test-coverage --test-reporter=lcov --test-reporter-destination=coverage.info",
     "docs": "jsdoc2md -f lib/gettext.js -t docs/README.template.md --partial docs/templates/*.hbs --param-list-format list > README.md"
   },
   "main": "./lib/gettext.js",
-  "files": [
-    "lib",
-    "test"
-  ],
+  "files": ["lib", "test"],
   "licenses": [
     {
       "type": "MIT",

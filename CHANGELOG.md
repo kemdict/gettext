@@ -13,6 +13,8 @@
 
 ### Project changes
 
+- Set up local coverage
+
 ## v0.0.1 (2025-12-30)
 
 First forked version.
