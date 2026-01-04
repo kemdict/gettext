@@ -36,6 +36,7 @@ This is kind of what bindtextdomain does. But because we want to load translatio
 - We should read LANGUAGE, LC_ALL, LC_MESSAGES, LANG in that order (except if LANG is C then always return msgid)
 - We need a way to specify the current locale per request. This probably means splitting catalog from the gettext instance.
 
+* Per-string fallbacks
 * Example project / sandboxes for SvelteKit
 * Extraction command
 
