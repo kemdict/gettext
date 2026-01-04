@@ -13,6 +13,7 @@
 
 ### Project changes
 
+- Set up some limited performance testing
 - Rename main test file to look better when there are multiple test files
 - Set up local coverage
 
