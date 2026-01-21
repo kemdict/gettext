@@ -4,6 +4,7 @@
 
 ### Changes
 
+- Set up TypeScript declarations
 - Add another GNU Hello clone which directly reads GNU Hello's installed message catalogs on the system (if any)
 - Add a `loaders` module which provides functions for loading PO files from directories
 - Rename `guessLocale` to `guessEnvLocale`, and allow it to take an object instead of directly reading from process.env, making it easier to test.

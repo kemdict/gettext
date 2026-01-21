@@ -17,8 +17,12 @@
     "decl": "tsc",
     "docs": "jsdoc2md -f lib/gettext.js -t docs/README.template.md --partial docs/templates/*.hbs --param-list-format list > README.md"
   },
-  "exports": "./lib/gettext.js",
-  "types": "./types/gettext.d.ts",
+  "exports": {
+    ".": {
+      "default": "./lib/gettext.js",
+      "types": "./types/gettext.d.ts"
+    },
+  },
   "files": ["lib", "test"],
   "licenses": [
     {
