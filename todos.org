@@ -1,5 +1,9 @@
 #+title: Todos
 
+* loaders.js requires gettext-parser but currently this is not obvious
+
+Either we have a hard dependency on gettext-parser (I like this better) or figure out how we want to do dynamic imports (we'll have to do this for extractors anyways).
+
 * High priority
 ** Set up automatic CI
 ** Get Astro example going
