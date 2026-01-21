@@ -1,5 +1,5 @@
 import Gettext from "@kemdict/gettext";
-import { loadTranslations } from "../../../lib/loaders";
+import { loadTranslations } from "@kemdict/gettext/loaders.js";
 import path from "node:path";
 
 export const gt = new Gettext({

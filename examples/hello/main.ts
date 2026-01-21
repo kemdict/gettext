@@ -1,6 +1,5 @@
 import Gettext, { guessEnvLocale } from "@kemdict/gettext";
-// TODO the export needs to be set up properly
-import { loadTranslations } from "../../lib/loaders.js";
+import { loadTranslations } from "@kemdict/gettext/loaders.js";
 import { parseArgs } from "node:util";
 import path from "node:path";
 import { sprintf } from "sprintf-js";
