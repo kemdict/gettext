@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@kemdict/gettext": "workspace:",
+    "rollup-plugin-gettext": "workspace:",
     "astro": "^5.16.6"
   },
   "devDependencies": {
