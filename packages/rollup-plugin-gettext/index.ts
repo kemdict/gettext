@@ -43,7 +43,8 @@ export function po(options: PoPluginOptions = {}): Plugin {
                             encoding: "utf8",
                         },
                     );
-                    const key = path.basename(file);
+                    const key = path.basename(file, ".po");
+                    // TODO: get rid of domains like python's gettext
                     catalogs[key] = { messages: poParser.parse(content) };
                 }
                 if (Object.keys(catalogs).length === 0) {
@@ -96,8 +97,9 @@ export function mo(options: MoPluginOptions = {}): Plugin {
                 for (const file of files) {
                     if (!file.endsWith(".mo")) continue;
                     const content = await fs.readFile(path.join(fulldir, file));
-                    const key = path.basename(file);
+                    const key = path.basename(file, ".mo");
                     catalogs[key] = {
+                        // TODO: get rid of domains like python's gettext
                         messages: moParser.parse(
                             content,
                             options.defaultCharset,
