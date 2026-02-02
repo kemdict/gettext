@@ -1,7 +1,8 @@
 import Gettext from "@kemdict/gettext";
-import { loadTranslations } from "@kemdict/gettext/loaders.js";
-import path from "node:path";
+import zh_TW from "./po/zh_TW.po";
 
 export const gt = new Gettext({
-    translations: loadTranslations(path.join(import.meta.dirname, "po")),
+    translations: {
+        zh_TW,
+    },
 });
