@@ -37,14 +37,16 @@ export function po(options: PoPluginOptions = {}): Plugin {
                 > = {};
                 for (const file of files) {
                     if (!file.endsWith(".po")) continue;
-                    const content = await fs.readFile(file, {
-                        encoding: "utf8",
-                    });
+                    const content = await fs.readFile(
+                        path.join(fulldir, file),
+                        {
+                            encoding: "utf8",
+                        },
+                    );
                     const key = path.basename(file);
                     catalogs[key] = { messages: poParser.parse(content) };
                 }
                 if (Object.keys(catalogs).length === 0) {
-                    this.warn(`${source} imported but has no PO files in it`);
                     return null;
                 }
                 parsedMap.set(fulldir, catalogs);
@@ -93,7 +95,7 @@ export function mo(options: MoPluginOptions = {}): Plugin {
                 > = {};
                 for (const file of files) {
                     if (!file.endsWith(".mo")) continue;
-                    const content = await fs.readFile(file);
+                    const content = await fs.readFile(path.join(fulldir, file));
                     const key = path.basename(file);
                     catalogs[key] = {
                         messages: moParser.parse(
@@ -103,7 +105,6 @@ export function mo(options: MoPluginOptions = {}): Plugin {
                     };
                 }
                 if (Object.keys(catalogs).length === 0) {
-                    this.warn(`${source} imported but has no MO files in it`);
                     return null;
                 }
                 parsedMap.set(fulldir, catalogs);
