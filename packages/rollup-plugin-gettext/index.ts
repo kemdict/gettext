@@ -27,7 +27,14 @@ export function po(options: PoPluginOptions = {}): Plugin {
     return {
         name: "po",
         transform(code, id) {
-            if (!/\.po$/.test(id) || !filter(id)) return;
+            if (
+                !(
+                    (arguments[2]?.attributes?.type === "po" ||
+                        /\.po$/.test(id)) &&
+                    filter(id)
+                )
+            )
+                return;
             try {
                 const parsed = poParser.parse(code, options.parserOptions);
                 return {
@@ -50,7 +57,14 @@ export function mo(options: MoPluginOptions = {}): Plugin {
     return {
         name: "mo",
         transform(code, id) {
-            if (!/\.mo$/.test(id) || !filter(id)) return;
+            if (
+                !(
+                    (arguments[2]?.attributes?.type === "mo" ||
+                        /\.mo$/.test(id)) &&
+                    filter(id)
+                )
+            )
+                return;
             try {
                 const parsed = moParser.parse(code, options.defaultCharset);
                 return {

@@ -32,7 +32,8 @@ export default {
 
 Then import files like `./path/to/file.po` or `./path/to/file.mo`.
 
-TODO: import directories like `po:./path`.
+TODO: import directories like `po:./path` or `import foo from "./path" with {type: "po"}`
+TODO: typescript types, there should be a type module that can be referenced in tsconfig
 
 ## Acknowledgements
 
