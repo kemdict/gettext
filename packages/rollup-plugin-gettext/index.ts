@@ -1,9 +1,14 @@
-import { createFilter, dataToEsm, FilterPattern } from "@rollup/pluginutils";
 import {
-    type GetTextPoParserOptions,
+    createFilter,
+    dataToEsm,
+    type FilterPattern,
+} from "@rollup/pluginutils";
+import {
     po as poParser,
     mo as moParser,
+    type GetTextPoParserOptions,
 } from "gettext-parser";
+import type { Plugin } from "rollup";
 
 interface MoPluginOptions {
     include?: FilterPattern;
@@ -17,11 +22,11 @@ interface PoPluginOptions {
     parserOptions?: GetTextPoParserOptions;
 }
 
-export function po(options: PoPluginOptions = {}) {
+export function po(options: PoPluginOptions = {}): Plugin {
     const filter = createFilter(options?.include, options?.exclude);
     return {
         name: "po",
-        transform(code: string, id: string) {
+        transform(code, id) {
             if (!/\.po$/.test(id) || !filter(id)) return;
             try {
                 const parsed = poParser.parse(code, options.parserOptions);
@@ -40,11 +45,11 @@ export function po(options: PoPluginOptions = {}) {
     };
 }
 
-export function mo(options: MoPluginOptions = {}) {
+export function mo(options: MoPluginOptions = {}): Plugin {
     const filter = createFilter(options?.include, options?.exclude);
     return {
         name: "mo",
-        transform(code: string, id: string) {
+        transform(code, id) {
             if (!/\.mo$/.test(id) || !filter(id)) return;
             try {
                 const parsed = moParser.parse(code, options.defaultCharset);
