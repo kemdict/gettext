@@ -25,36 +25,43 @@ export function po(options: PoPluginOptions = {}): Plugin {
     >();
     return {
         name: "po",
-        async resolveId(source, importer) {
-            if (!importer) return null;
-            try {
-                const fulldir = path.join(path.dirname(importer), source);
-                // if it doesn't exist that just means we shouldn't handle it
-                const files = await fs.readdir(fulldir);
-                const catalogs: Record<
-                    string,
-                    Record<string, GetTextTranslations>
-                > = {};
-                for (const file of files) {
-                    if (!file.endsWith(".po")) continue;
-                    const content = await fs.readFile(
-                        path.join(fulldir, file),
-                        {
-                            encoding: "utf8",
-                        },
+        // This is just for a directory of PO files. A single PO file gets the
+        // standard resolution.
+        resolveId: {
+            filter: { id: /^po:/ },
+            async handler(source, importer) {
+                if (!importer) return null;
+                try {
+                    const fulldir = path.join(
+                        path.dirname(importer),
+                        source.slice("po:".length),
                     );
-                    const key = path.basename(file, ".po");
-                    // TODO: get rid of domains like python's gettext
-                    catalogs[key] = { messages: poParser.parse(content) };
-                }
-                if (Object.keys(catalogs).length === 0) {
+                    const files = await fs.readdir(fulldir);
+                    const catalogs: Record<
+                        string,
+                        Record<string, GetTextTranslations>
+                    > = {};
+                    for (const file of files) {
+                        if (!file.endsWith(".po")) continue;
+                        const content = await fs.readFile(
+                            path.join(fulldir, file),
+                            {
+                                encoding: "utf8",
+                            },
+                        );
+                        const key = path.basename(file, ".po");
+                        // TODO: get rid of domains like python's gettext
+                        catalogs[key] = { messages: poParser.parse(content) };
+                    }
+                    if (Object.keys(catalogs).length === 0) {
+                        return null;
+                    }
+                    parsedMap.set(fulldir, catalogs);
+                    return fulldir + "?gettext-po-dir";
+                } catch (_e) {
                     return null;
                 }
-                parsedMap.set(fulldir, catalogs);
-                return fulldir + "?gettext-po-dir";
-            } catch (_e) {
-                return null;
-            }
+            },
         },
         load: {
             filter: {
@@ -84,36 +91,44 @@ export function mo(options: MoPluginOptions = {}): Plugin {
     >();
     return {
         name: "mo",
-        async resolveId(source, importer) {
-            if (!importer) return null;
-            try {
-                const fulldir = path.join(path.dirname(importer), source);
-                // if it doesn't exist that just means we shouldn't handle it
-                const files = await fs.readdir(fulldir);
-                const catalogs: Record<
-                    string,
-                    Record<string, GetTextTranslations>
-                > = {};
-                for (const file of files) {
-                    if (!file.endsWith(".mo")) continue;
-                    const content = await fs.readFile(path.join(fulldir, file));
-                    const key = path.basename(file, ".mo");
-                    catalogs[key] = {
-                        // TODO: get rid of domains like python's gettext
-                        messages: moParser.parse(
-                            content,
-                            options.defaultCharset,
-                        ),
-                    };
-                }
-                if (Object.keys(catalogs).length === 0) {
+        resolveId: {
+            filter: { id: /^mo:/ },
+            async handler(source, importer) {
+                if (!importer) return null;
+                try {
+                    const fulldir = path.join(
+                        path.dirname(importer),
+                        source.slice("mo:".length),
+                    );
+                    // if it doesn't exist that just means we shouldn't handle it
+                    const files = await fs.readdir(fulldir);
+                    const catalogs: Record<
+                        string,
+                        Record<string, GetTextTranslations>
+                    > = {};
+                    for (const file of files) {
+                        if (!file.endsWith(".mo")) continue;
+                        const content = await fs.readFile(
+                            path.join(fulldir, file),
+                        );
+                        const key = path.basename(file, ".mo");
+                        catalogs[key] = {
+                            // TODO: get rid of domains like python's gettext
+                            messages: moParser.parse(
+                                content,
+                                options.defaultCharset,
+                            ),
+                        };
+                    }
+                    if (Object.keys(catalogs).length === 0) {
+                        return null;
+                    }
+                    parsedMap.set(fulldir, catalogs);
+                    return fulldir + "?gettext-mo-dir";
+                } catch (_e) {
                     return null;
                 }
-                parsedMap.set(fulldir, catalogs);
-                return fulldir + "?gettext-mo-dir";
-            } catch (_e) {
-                return null;
-            }
+            },
         },
         load: {
             filter: {
