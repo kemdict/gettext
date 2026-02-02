@@ -1,1 +1,41 @@
-{}
+{
+  "name": "rollup-plugin-gettext",
+  "description": "Rollup plugin to load PO or MO files via gettext-parser",
+  "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kemdict/gettext.git"
+  },
+  "homepage": "https://github.com/kemdict/gettext#readme",
+  "bugs": {
+    "url": "https://github.com/kemdict/gettext/issues"
+  },
+  "author": {
+    "name": "Kisaragi Hiu",
+    "email": "mail@kisaragi-hiu.com"
+  },
+  "license": "MIT",
+  "files": [
+    "dist",
+    "types",
+    "README.md",
+    "LICENSE",
+    "package.json"
+  ],
+  "keywords": [
+    "rollup-plugin",
+    "gettext"
+  ],
+  "main": "dist/index.js",
+  "types": "types/index.d.ts",
+  "scripts": {
+    "build": "rollup -c"
+  },
+  "peerDependencies": {
+    "rollup": "^4.0.0"
+  },
+  "dependencies": {
+    "@rollup/pluginutils": "^5.3.0",
+    "gettext-parser": "^9.0.0"
+  }
+}

@@ -1,8 +1,8 @@
 # rollup-plugin-gettext
 
-Import PO or MO files when using Rollup. Does not handle extraction or translating at runtime.
+Import PO or MO files when using Rollup or Vite, parsing translation catalogs through [gettext-parser](https://github.com/smhg/gettext-parser).
 
-Parsing happens through [gettext-parser](https://github.com/smhg/gettext-parser).
+This does not handle extraction or translating at runtime.
 
 References:
 
