@@ -29,6 +29,9 @@ importers:
       astro:
         specifier: ^5.16.6
         version: 5.16.6(@types/node@25.0.3)(rollup@4.54.0)(typescript@5.9.3)
+      rollup-plugin-gettext:
+        specifier: 'workspace:'
+        version: link:../../packages/rollup-plugin-gettext
     devDependencies:
       '@astrojs/compiler':
         specifier: ^2.13.0
@@ -77,6 +80,10 @@ importers:
       rollup:
         specifier: ^4.0.0
         version: 4.54.0
+    devDependencies:
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
 
 packages:
 
