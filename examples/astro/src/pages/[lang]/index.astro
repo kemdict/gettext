@@ -1,8 +1,19 @@
 ---
-import Welcome from "../components/Welcome.astro";
-import Layout from "../layouts/Layout.astro";
+import Welcome from "../../components/Welcome.astro";
+import Layout from "../../layouts/Layout.astro";
+
+const { lang } = Astro.params;
+import { gt } from "../../gettext";
+const { _ } = gt.bindLocale(lang);
+
+import { i18n } from "astro:config/client";
+export function getStaticPaths() {
+  return i18n.locales.map((lang) => ({
+    params: { lang: lang },
+  }));
+}
 ---
 
-<Layout>
-  <Welcome />
+<Layout title={_("Astro Basics")}>
+  <Welcome lang={lang} />
 </Layout>
