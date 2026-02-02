@@ -14,61 +14,65 @@ import {
 import type { Plugin } from "rollup";
 
 interface MoPluginOptions {
-    include?: FilterPattern;
-    exclude?: FilterPattern;
     defaultCharset?: string;
 }
 
 interface PoPluginOptions {
-    include?: FilterPattern;
-    exclude?: FilterPattern;
     parserOptions?: GetTextPoParserOptions;
 }
 
 export function po(options: PoPluginOptions = {}): Plugin {
-    const filter = createFilter(options?.include, options?.exclude);
+    const parsedMap = new Map<
+        string,
+        Record<string, Record<string, GetTextTranslations>>
+    >();
     return {
         name: "po",
-        async resolveId(source, importer, { attributes }) {
-            if (!(filter(source) && attributes.type === "po")) return null;
+        async resolveId(source, importer) {
             if (!importer) return null;
-            const files = await this.fs.readdir(path.dirname(importer));
-            const catalogs: Record<
-                string,
-                Record<string, GetTextTranslations>
-            > = {};
-            for (const file of files) {
-                const content = await this.fs.readFile(file, {
-                    encoding: "utf8",
-                });
-                const key = path.basename(file);
-                catalogs[key] = { messages: poParser.parse(content) };
-            }
-        },
-        load(id) {
-            // for some reason the type I import from Rollup does not include
-            // the options argument, even though they are documented and do
-            // indeed show up at runtime
-            // this works around that
-            const type = arguments[2]?.attributes?.type;
-            if (type !== "po") return;
-        },
-        transform(code, id) {
-            const type = arguments[2]?.attributes?.type;
-            if (!((type === "po" || /\.po$/.test(id)) && filter(id))) return;
             try {
-                const parsed = poParser.parse(code, options.parserOptions);
-                return {
-                    code: dataToEsm(parsed, {
-                        preferConst: true,
-                        compact: true,
-                        namedExports: false,
-                    }),
-                    map: { mappings: "" },
-                };
-            } catch (e) {
+                const fulldir = path.join(path.dirname(importer), source);
+                // if it doesn't exist that just means we shouldn't handle it
+                const files = await this.fs.readdir(fulldir);
+                const catalogs: Record<
+                    string,
+                    Record<string, GetTextTranslations>
+                > = {};
+                for (const file of files) {
+                    if (!file.endsWith(".po")) continue;
+                    const content = await this.fs.readFile(file, {
+                        encoding: "utf8",
+                    });
+                    const key = path.basename(file);
+                    catalogs[key] = { messages: poParser.parse(content) };
+                }
+                if (Object.keys(catalogs).length === 0) {
+                    this.warn(`${source} imported but has no PO files in it`);
+                    return null;
+                }
+                parsedMap.set(fulldir, catalogs);
+                return fulldir + "?gettext-po-dir";
+            } catch (_e) {
                 return null;
             }
+        },
+        load: {
+            filter: {
+                id: /(?:\.po|\?gettext-po-dir)$/,
+            },
+            async handler(id) {
+                const parsed = id.endsWith("?gettext-po-dir")
+                    ? parsedMap.get(id.slice(0, -1 * "?gettext-po-dir".length))
+                    : poParser.parse(
+                          await this.fs.readFile(id, { encoding: "utf8" }),
+                          options.parserOptions,
+                      );
+                return dataToEsm(parsed, {
+                    preferConst: true,
+                    compact: true,
+                    namedExports: false,
+                });
+            },
         },
     };
 }
