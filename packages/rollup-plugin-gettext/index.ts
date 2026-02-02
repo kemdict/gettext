@@ -75,25 +75,60 @@ export function po(options: PoPluginOptions = {}): Plugin {
 }
 
 export function mo(options: MoPluginOptions = {}): Plugin {
-    const filter = createFilter(options?.include, options?.exclude);
+    const parsedMap = new Map<
+        string,
+        Record<string, Record<string, GetTextTranslations>>
+    >();
     return {
         name: "mo",
-        transform(code, id) {
-            const type = arguments[2]?.attributes?.type;
-            if (!((type === "mo" || /\.mo$/.test(id)) && filter(id))) return;
+        async resolveId(source, importer) {
+            if (!importer) return null;
             try {
-                const parsed = moParser.parse(code, options.defaultCharset);
-                return {
-                    code: dataToEsm(parsed, {
-                        preferConst: true,
-                        compact: true,
-                        namedExports: false,
-                    }),
-                    map: { mappings: "" },
-                };
-            } catch (e) {
+                const fulldir = path.join(path.dirname(importer), source);
+                // if it doesn't exist that just means we shouldn't handle it
+                const files = await fs.readdir(fulldir);
+                const catalogs: Record<
+                    string,
+                    Record<string, GetTextTranslations>
+                > = {};
+                for (const file of files) {
+                    if (!file.endsWith(".mo")) continue;
+                    const content = await fs.readFile(file);
+                    const key = path.basename(file);
+                    catalogs[key] = {
+                        messages: moParser.parse(
+                            content,
+                            options.defaultCharset,
+                        ),
+                    };
+                }
+                if (Object.keys(catalogs).length === 0) {
+                    this.warn(`${source} imported but has no MO files in it`);
+                    return null;
+                }
+                parsedMap.set(fulldir, catalogs);
+                return fulldir + "?gettext-mo-dir";
+            } catch (_e) {
                 return null;
             }
+        },
+        load: {
+            filter: {
+                id: /(?:\.mo|\?gettext-mo-dir)$/,
+            },
+            async handler(id) {
+                const parsed = id.endsWith("?gettext-mo-dir")
+                    ? parsedMap.get(id.slice(0, -1 * "?gettext-mo-dir".length))
+                    : moParser.parse(
+                          await fs.readFile(id),
+                          options.defaultCharset,
+                      );
+                return dataToEsm(parsed, {
+                    preferConst: true,
+                    compact: true,
+                    namedExports: false,
+                });
+            },
         },
     };
 }
