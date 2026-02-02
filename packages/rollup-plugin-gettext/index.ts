@@ -1,0 +1,152 @@
+import path from "node:path";
+import fs from "node:fs/promises";
+
+import { createFilter, dataToEsm } from "@rollup/pluginutils";
+import {
+    po as poParser,
+    mo as moParser,
+    type GetTextPoParserOptions,
+    type GetTextTranslations,
+} from "gettext-parser";
+import type { Plugin } from "rollup";
+
+interface MoPluginOptions {
+    defaultCharset?: string;
+}
+
+interface PoPluginOptions {
+    parserOptions?: GetTextPoParserOptions;
+}
+
+export function po(options: PoPluginOptions = {}): Plugin {
+    const parsedMap = new Map<
+        string,
+        Record<string, Record<string, GetTextTranslations>>
+    >();
+    return {
+        name: "po",
+        // This is just for a directory of PO files. A single PO file gets the
+        // standard resolution.
+        resolveId: {
+            filter: { id: /^po:/ },
+            async handler(source, importer) {
+                if (!importer) return null;
+                try {
+                    const fulldir = path.join(
+                        path.dirname(importer),
+                        source.slice("po:".length),
+                    );
+                    const files = await fs.readdir(fulldir);
+                    const catalogs: Record<
+                        string,
+                        Record<string, GetTextTranslations>
+                    > = {};
+                    for (const file of files) {
+                        if (!file.endsWith(".po")) continue;
+                        const content = await fs.readFile(
+                            path.join(fulldir, file),
+                            {
+                                encoding: "utf8",
+                            },
+                        );
+                        const key = path.basename(file, ".po");
+                        // TODO: get rid of domains like python's gettext
+                        catalogs[key] = { messages: poParser.parse(content) };
+                    }
+                    if (Object.keys(catalogs).length === 0) {
+                        return null;
+                    }
+                    parsedMap.set(fulldir, catalogs);
+                    return fulldir + "?gettext-po-dir";
+                } catch (_e) {
+                    return null;
+                }
+            },
+        },
+        load: {
+            filter: {
+                id: /(?:\.po|\?gettext-po-dir)$/,
+            },
+            async handler(id) {
+                const parsed = id.endsWith("?gettext-po-dir")
+                    ? parsedMap.get(id.slice(0, -1 * "?gettext-po-dir".length))
+                    : poParser.parse(
+                          await fs.readFile(id, { encoding: "utf8" }),
+                          options.parserOptions,
+                      );
+                return dataToEsm(parsed, {
+                    preferConst: true,
+                    compact: true,
+                    namedExports: false,
+                });
+            },
+        },
+    };
+}
+
+export function mo(options: MoPluginOptions = {}): Plugin {
+    const parsedMap = new Map<
+        string,
+        Record<string, Record<string, GetTextTranslations>>
+    >();
+    return {
+        name: "mo",
+        resolveId: {
+            filter: { id: /^mo:/ },
+            async handler(source, importer) {
+                if (!importer) return null;
+                try {
+                    const fulldir = path.join(
+                        path.dirname(importer),
+                        source.slice("mo:".length),
+                    );
+                    // if it doesn't exist that just means we shouldn't handle it
+                    const files = await fs.readdir(fulldir);
+                    const catalogs: Record<
+                        string,
+                        Record<string, GetTextTranslations>
+                    > = {};
+                    for (const file of files) {
+                        if (!file.endsWith(".mo")) continue;
+                        const content = await fs.readFile(
+                            path.join(fulldir, file),
+                        );
+                        const key = path.basename(file, ".mo");
+                        catalogs[key] = {
+                            // TODO: get rid of domains like python's gettext
+                            messages: moParser.parse(
+                                content,
+                                options.defaultCharset,
+                            ),
+                        };
+                    }
+                    if (Object.keys(catalogs).length === 0) {
+                        return null;
+                    }
+                    parsedMap.set(fulldir, catalogs);
+                    return fulldir + "?gettext-mo-dir";
+                } catch (_e) {
+                    return null;
+                }
+            },
+        },
+        load: {
+            filter: {
+                id: /(?:\.mo|\?gettext-mo-dir)$/,
+            },
+            async handler(id) {
+                const parsed = id.endsWith("?gettext-mo-dir")
+                    ? parsedMap.get(id.slice(0, -1 * "?gettext-mo-dir".length))
+                    : moParser.parse(
+                          await fs.readFile(id),
+                          options.defaultCharset,
+                      );
+                return dataToEsm(parsed, {
+                    preferConst: true,
+                    compact: true,
+                    namedExports: false,
+                });
+            },
+        },
+    };
+}
