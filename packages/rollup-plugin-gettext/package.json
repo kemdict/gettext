@@ -11,13 +11,12 @@
   "bugs": {
     "url": "https://github.com/kemdict/gettext/issues"
   },
-  "author": {
-    "name": "Kisaragi Hiu",
-    "email": "mail@kisaragi-hiu.com"
-  },
+  "author": "Kisaragi Hiu <mail@kisaragi-hiu.com>",
   "license": "MIT",
   "files": ["dist", "README.md", "LICENSE", "package.json"],
   "keywords": ["rollup-plugin", "gettext"],
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
       "default": "./dist/index.js",
