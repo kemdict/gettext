@@ -4,19 +4,36 @@ Import PO or MO files when using Rollup or Vite, parsing translation catalogs th
 
 This does not handle extraction or translating at runtime.
 
-References:
-
-- @miyaneee/rollup-plugin-json5
-
 ## Usage
 
-```typescript
-import { po } from "rollup-plugin-gettext";
+Rollup or Vite:
 
+```typescript
+// rollup.config.js or vite.config.js
+import { mo, po } from "rollup-plugin-gettext";
 export default {
-  // …
-  plugins: [po()]
+  plugins: [mo(), po()] // order doesn't matter, pick either or both
 }
 ```
 
-Then import directories like `po:dir/to/foo/bar/` or files like `./path/to/file.po`.
+Then import files like `./path/to/file.po` or `./path/to/file.mo`.
+
+Astro:
+
+```typescript
+// astro.config.js
+import { mo, po } from "rollup-plugin-gettext";
+export default {
+  vite: {
+    plugins: [mo(), po()] // order doesn't matter, pick either or both
+  }
+}
+```
+
+Then import files like `./path/to/file.po` or `./path/to/file.mo`.
+
+TODO: import directories like `po:./path`.
+
+## Acknowledgements
+
+- I referenced [@miyaneee/rollup-plugin-json5](https://github.com/Miyaneee/rollup-plugin-json5) for how a Rollup plugin like this should be structured
