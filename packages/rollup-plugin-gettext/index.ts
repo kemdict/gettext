@@ -1,10 +1,7 @@
 import path from "node:path";
+import fs from "node:fs/promises";
 
-import {
-    createFilter,
-    dataToEsm,
-    type FilterPattern,
-} from "@rollup/pluginutils";
+import { createFilter, dataToEsm } from "@rollup/pluginutils";
 import {
     po as poParser,
     mo as moParser,
@@ -33,14 +30,14 @@ export function po(options: PoPluginOptions = {}): Plugin {
             try {
                 const fulldir = path.join(path.dirname(importer), source);
                 // if it doesn't exist that just means we shouldn't handle it
-                const files = await this.fs.readdir(fulldir);
+                const files = await fs.readdir(fulldir);
                 const catalogs: Record<
                     string,
                     Record<string, GetTextTranslations>
                 > = {};
                 for (const file of files) {
                     if (!file.endsWith(".po")) continue;
-                    const content = await this.fs.readFile(file, {
+                    const content = await fs.readFile(file, {
                         encoding: "utf8",
                     });
                     const key = path.basename(file);
@@ -64,7 +61,7 @@ export function po(options: PoPluginOptions = {}): Plugin {
                 const parsed = id.endsWith("?gettext-po-dir")
                     ? parsedMap.get(id.slice(0, -1 * "?gettext-po-dir".length))
                     : poParser.parse(
-                          await this.fs.readFile(id, { encoding: "utf8" }),
+                          await fs.readFile(id, { encoding: "utf8" }),
                           options.parserOptions,
                       );
                 return dataToEsm(parsed, {
