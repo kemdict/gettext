@@ -1,5 +1,13 @@
 {
   "dependencies": {
-    "rollup-plugin-gettext": "workspace:"
+    "rollup-plugin-gettext": "workspace:",
+    "@kemdict/gettext": "workspace:"
+  },
+  "devDependencies": {
+    "vite": "^7.3.1"
+  },
+  "scripts": {
+    "extract": "xgettext index.ts --language=javascript -o messages.pot",
+    "compile-mo": "parallel msgfmt '{}' -o mo/'{/.}'.mo ::: po/*.po"
   }
 }
