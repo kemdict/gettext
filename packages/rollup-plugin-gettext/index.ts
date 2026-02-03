@@ -1,7 +1,7 @@
 import path from "node:path";
 import fs from "node:fs/promises";
 
-import { createFilter, dataToEsm } from "@rollup/pluginutils";
+import { dataToEsm } from "@rollup/pluginutils";
 import {
     po as poParser,
     mo as moParser,

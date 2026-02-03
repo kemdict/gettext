@@ -27,7 +27,7 @@
     "build": "tsc"
   },
   "peerDependencies": {
-    "rollup": "^4.0.0"
+    "rollup": "^4.38.0"
   },
   "dependencies": {
     "@rollup/pluginutils": "^5.3.0",
