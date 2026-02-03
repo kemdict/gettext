@@ -10,6 +10,7 @@
   "scripts": {
     "extract": "xgettext index.ts --language=javascript -o messages.pot",
     "compile-mo": "parallel msgfmt '{}' -o mo/'{/.}'.mo ::: po/*.po",
-    "build": "rollup -c rollup.config.ts index.ts -o index.js"
+    "build": "rollup -c rollup.config.ts index.ts -o index.js",
+    "run": "npm run build && node index.js"
   }
 }
