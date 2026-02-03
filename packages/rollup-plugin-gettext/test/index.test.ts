@@ -41,7 +41,7 @@ it("imports PO and MO files without prefix", async () => {
 
 it("imports PO and MO files with prefix", async () => {
     const onePoWithPrefix = (await import("po:./po/zh_TW.po")).default;
-    const oneMoWithPrefix = (await import("po:./mo/nan_TW.mo")).default;
+    const oneMoWithPrefix = (await import("mo:./mo/nan_TW.mo")).default;
     expect(onePoWithPrefix.headers["Language"]).toEqual("zh_TW");
     expect(oneMoWithPrefix.headers["Language"]).toEqual("nan_TW");
 });

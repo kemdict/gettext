@@ -113,13 +113,13 @@ export function mo(options: MoPluginOptions = {}): Plugin {
             filter: { id: /^mo:/ },
             async handler(source, importer) {
                 if (!importer) return null;
+                const fullpath = path.join(
+                    path.dirname(importer),
+                    source.slice("mo:".length),
+                );
                 try {
-                    const fulldir = path.join(
-                        path.dirname(importer),
-                        source.slice("mo:".length),
-                    );
-                    // if it doesn't exist that just means we shouldn't handle it
-                    const files = await fs.readdir(fulldir);
+                    // prefixed directories
+                    const files = await fs.readdir(fullpath);
                     const catalogs: Record<
                         string,
                         Record<string, GetTextTranslations>
@@ -127,11 +127,11 @@ export function mo(options: MoPluginOptions = {}): Plugin {
                     for (const file of files) {
                         if (!file.endsWith(".mo")) continue;
                         const content = await fs.readFile(
-                            path.join(fulldir, file),
+                            path.join(fullpath, file),
                         );
                         const key = path.basename(file, ".mo");
+                        // TODO: get rid of domains like python's gettext
                         catalogs[key] = {
-                            // TODO: get rid of domains like python's gettext
                             messages: moParser.parse(
                                 content,
                                 options.defaultCharset,
@@ -141,22 +141,35 @@ export function mo(options: MoPluginOptions = {}): Plugin {
                     if (Object.keys(catalogs).length === 0) {
                         return null;
                     }
-                    parsedMap.set(fulldir, catalogs);
-                    return fulldir + "?gettext-mo-dir";
-                } catch (_e) {
-                    return null;
+                    parsedMap.set(fullpath, catalogs);
+                    return fullpath + "?gettext-mo-dir";
+                } catch (e) {
+                    if ((e as { code: string }).code !== "ENOTDIR") return null;
+                    // prefixed files, we need to resolve this here for
+                    // absolute paths
+                    return fullpath + "?gettext-mo-file";
                 }
             },
         },
         load: {
             filter: {
-                id: /(?:\.mo|\?gettext-mo-dir)$/,
+                id: /(?:\.mo|\?gettext-mo-dir|\?gettext-mo-file)$/,
             },
             async handler(id) {
+                // 3 cases:
                 const parsed = id.endsWith("?gettext-mo-dir")
-                    ? parsedMap.get(id.slice(0, -1 * "?gettext-mo-dir".length))
+                    ? // 1: prefixed directory imports, which would have the ID
+                      // resolved like this in our resolveId
+                      parsedMap.get(id.slice(0, -1 * "?gettext-mo-dir".length))
                     : moParser.parse(
-                          await fs.readFile(id),
+                          await fs.readFile(
+                              id.endsWith("?gettext-mo-file")
+                                  ? // 2: prefixed file imports, strip the prefix
+                                    id.slice(0, -1 * "?gettext-mo-file".length)
+                                  : // 3: unprefixed file imports, use the file
+                                    // path directly
+                                    id,
+                          ),
                           options.defaultCharset,
                       );
                 return dataToEsm(parsed, {
