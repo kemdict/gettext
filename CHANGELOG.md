@@ -1,5 +1,11 @@
 # @kemdict/gettext Changelog
 
+## v0.0.3 (unreleased)
+
+### Changes
+
+- Remove domains. Domains in upstream gettext is for loading multiple catalogs in the same app (same process), with there only being one “gettext instance”. In a class-based approach where you could just initialize a separate instance if you really need multiple message catalogs, domains are not necessary. As an example, Python's builtin gettext implementation also doesn't implement domains.
+
 ## v0.0.2 (2026-02-04)
 
 ### Changes
