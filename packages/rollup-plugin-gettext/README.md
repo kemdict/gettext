@@ -28,13 +28,18 @@ export default {
 }
 ```
 
-Then in your code:
+Then, in your code, you can import single PO or MO files:
 
 ```typescript
 import de from "./locale/de.po"
-// equivalent to (await import("gettext-parser")).po.parse(readFileSync("./locale/de.po"))
-// except Vite/Rollup will bundle the value making it usable on the client side
+import de from "po:./locale/de.po"
+import de from "./locale/de.mo"
+import de from "mo:./locale/de.mo"
 ```
+
+This is equivalent to `(await import("gettext-parser")).po.parse(readFileSync("./locale/de.po"))`, except Vite/Rollup will bundle the value making it usable eg. on the client side.
+
+Note that using MO files doesn't really have a difference in performance here.
 
 Or, more usefully:
 
@@ -45,14 +50,19 @@ import translations2 from "mo:./dir/with/mo/files"
 
 this will import each of the PO files in the directory, and make them available as an object with keys being their basenames without extensions, and values being `{messages: GetTextTranslations}`. (“messages” is temporary and will be removed. That's a gettext domain but it's not actually read from anything.)
 
+The translations imported this way can be passed directly into the `@kemdict/gettext` runtime.
+
 Types: TODO
 
-## Reference
+## Options
 
-po: plugin for importing PO files (either a single one or a directory of them)
-  options: TODO
-mo: plugin for importing MO files (either a single one or a directory of them)
-  options: TODO
+- po:
+  - parserOptions: options to pass to the PO file parser from `gettext-parser`.
+
+    This is a nested object *just in case* it turns out the plugin could use some other options. (Currently this just has `defaultCharset` and `validation` in it, see the docs for `gettext-parser`.)
+
+- mo:
+  - defaultCharset: passed into the MO file parser from `gettext-parser`.
 
 ## Road to release (0.1.0)
 
