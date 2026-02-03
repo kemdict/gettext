@@ -10,8 +10,6 @@ The design of not directly depending on gettext-parser will be kept.
 
 I do not commit to any backwards compatibility whatsoever at this early stage.
 
-The rest is from node-gettext's README; I'll rewrite it later.
-
 ---
 
 ## Features
