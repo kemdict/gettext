@@ -19,12 +19,12 @@
   },
   "exports": {
     ".": {
-      "default": "./lib/gettext.js",
-      "types": "./types/gettext.d.ts"
+      "types": "./types/gettext.d.ts",
+      "default": "./lib/gettext.js"
     },
     "./loaders.js": {
-      "default": "./lib/loaders.js",
-      "types": "./types/loaders.d.ts"
+      "types": "./types/loaders.d.ts",
+      "default": "./lib/loaders.js"
     }
   },
   "files": ["lib", "test"],
