@@ -19,16 +19,14 @@ function bench(n, body) {
 function init() {
     return new Gettext({
         translations: {
-            uk: {
-                messages: po.parse(
-                    fs.readFileSync(
-                        import.meta.dirname + "/fixtures/dolphin-uk.po",
-                        {
-                            encoding: "utf-8",
-                        },
-                    ),
+            uk: po.parse(
+                fs.readFileSync(
+                    import.meta.dirname + "/fixtures/dolphin-uk.po",
+                    {
+                        encoding: "utf-8",
+                    },
                 ),
-            },
+            ),
         },
     });
 }

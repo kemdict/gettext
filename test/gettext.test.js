@@ -10,16 +10,14 @@ describe("Plurals", () => {
     it("should handle KDE Ukrainian fine", () => {
         const gt = new Gettext({
             translations: {
-                uk: {
-                    messages: po.parse(
-                        fs.readFileSync(
-                            import.meta.dirname + "/fixtures/dolphin-uk.po",
-                            {
-                                encoding: "utf-8",
-                            },
-                        ),
+                uk: po.parse(
+                    fs.readFileSync(
+                        import.meta.dirname + "/fixtures/dolphin-uk.po",
+                        {
+                            encoding: "utf-8",
+                        },
                     ),
-                },
+                ),
             },
         });
         const { npgettext, ngettext } = gt.bindLocale("uk");
@@ -149,32 +147,11 @@ describe("Gettext", function () {
             it("should store added translations", function () {
                 gt = new Gettext({
                     translations: {
-                        "et-EE": {
-                            messages: jsonFile,
-                        },
+                        "et-EE": jsonFile,
                     },
                 });
                 assert.ok(gt.catalogs.get("et-EE"));
-                assert.ok(gt.catalogs.get("et-EE")?.messages);
-                assert.equal(
-                    gt.catalogs.get("et-EE")?.messages.charset,
-                    "iso-8859-13",
-                );
-            });
-            it("should store added translations on a custom domain", function () {
-                gt = new Gettext({
-                    translations: {
-                        "et-EE": {
-                            mydomain: jsonFile,
-                        },
-                    },
-                });
-
-                assert.ok(gt.catalogs.get("et-EE")?.mydomain);
-                assert.equal(
-                    gt.catalogs.get("et-EE")?.mydomain.charset,
-                    "iso-8859-13",
-                );
+                assert.equal(gt.catalogs.get("et-EE")?.charset, "iso-8859-13");
             });
         });
         describe("#sourceLocale option", function () {
@@ -213,86 +190,12 @@ describe("Gettext", function () {
         it("can return all locales in the catalog", function () {
             gt = new Gettext({
                 translations: {
-                    "et-EE": {
-                        messages: jsonFile,
-                    },
+                    "et-EE": jsonFile,
                 },
             });
             assert.deepEqual([...gt.getLocales()], ["et-EE"]);
         });
     });
-
-    // describe("#setLocale", function () {
-    //     it("should have the empty string as default locale", function () {
-    //         assert.equal(gt.locale, "");
-    //     });
-
-    //     it("should accept whatever string is passed as locale", function () {
-    //         gt.setLocale("de-AT");
-    //         assert.equal(gt.locale, "de-AT");
-    //         gt.setLocale("01234");
-    //         assert.equal(gt.locale, "01234");
-    //         gt.setLocale("");
-    //         assert.equal(gt.locale, "");
-    //     });
-
-    //     it("should reject non-string locales", function () {
-    //         // @ts-expect-error
-    //         gt.setLocale(null);
-    //         assert.equal(gt.locale, "");
-    //         // @ts-expect-error
-    //         gt.setLocale(123);
-    //         assert.equal(gt.locale, "");
-    //         // @ts-expect-error
-    //         gt.setLocale(false);
-    //         assert.equal(gt.locale, "");
-    //         // @ts-expect-error
-    //         gt.setLocale(function () {});
-    //         assert.equal(gt.locale, "");
-    //         // @ts-expect-error
-    //         gt.setLocale(NaN);
-    //         assert.equal(gt.locale, "");
-    //         // @ts-expect-error
-    //         gt.setLocale();
-    //         assert.equal(gt.locale, "");
-    //     });
-    // });
-
-    // describe("#setTextDomain", function () {
-    //     it('should default to "messages"', function () {
-    //         assert.equal(gt.domain, "messages");
-    //     });
-
-    //     it("should accept and store any string as domain name", function () {
-    //         gt.setTextDomain("mydomain");
-    //         assert.equal(gt.domain, "mydomain");
-    //         gt.setTextDomain("01234");
-    //         assert.equal(gt.domain, "01234");
-    //         gt.setTextDomain("");
-    //         assert.equal(gt.domain, "");
-    //     });
-
-    //     it("should reject non-string domains", function () {
-    //         // @ts-expect-error
-    //         gt.setTextDomain(null);
-    //         assert.equal(gt.domain, "messages");
-    //         // @ts-expect-error
-    //         gt.setTextDomain(123);
-    //         assert.equal(gt.domain, "messages");
-    //         // @ts-expect-error
-    //         gt.setTextDomain(false);
-    //         assert.equal(gt.domain, "messages");
-    //         // @ts-expect-error
-    //         gt.setTextDomain(function () {});
-    //         assert.equal(gt.domain, "messages");
-    //         // @ts-expect-error
-    //         gt.setTextDomain(NaN);
-    //         assert.equal(gt.domain, "messages");
-    //         // @ts-expect-error
-    //         gt.setTextDomain();
-    //         assert.equal(gt.domain, "messages");
-    //     });
-    // });
 
     describe("Resolve translations", function () {
         /** @type {ReturnType<Gettext["bindLocale"]>} */
@@ -300,59 +203,14 @@ describe("Gettext", function () {
         beforeEach(() => {
             fns = new Gettext({
                 translations: {
-                    "et-EE": {
-                        messages: jsonFile,
-                    },
+                    "et-EE": jsonFile,
                 },
             }).bindLocale("et-EE");
-        });
-
-        describe("#dnpgettext", function () {
-            it("should return singular match from default context", function () {
-                assert.equal(
-                    fns.dnpgettext("messages", "", "o2-1", "o2-2", 1),
-                    "t2-1",
-                );
-            });
-
-            it("should return plural match from default context", function () {
-                assert.equal(
-                    fns.dnpgettext("messages", "", "o2-1", "o2-2", 2),
-                    "t2-2",
-                );
-            });
-
-            it("should return singular match from selected context", function () {
-                assert.equal(
-                    fns.dnpgettext("messages", "c2", "co2-1", "co2-2", 1),
-                    "ct2-1",
-                );
-            });
-
-            it("should return plural match from selected context", function () {
-                assert.equal(
-                    fns.dnpgettext("messages", "c2", "co2-1", "co2-2", 2),
-                    "ct2-2",
-                );
-            });
-
-            it("should return singular match for non existing domain", function () {
-                assert.equal(
-                    fns.dnpgettext("cccc", "", "o2-1", "o2-2", 1),
-                    "o2-1",
-                );
-            });
         });
 
         describe("#gettext", function () {
             it("should return singular from default context", function () {
                 assert.equal(fns.gettext("o2-1"), "t2-1");
-            });
-        });
-
-        describe("#dgettext", function () {
-            it("should return singular from default context", function () {
-                assert.equal(fns.dgettext("messages", "o2-1"), "t2-1");
             });
         });
 
@@ -362,24 +220,9 @@ describe("Gettext", function () {
             });
         });
 
-        describe("#dngettext", function () {
-            it("should return plural from default context", function () {
-                assert.equal(
-                    fns.dngettext("messages", "o2-1", "o2-2", 2),
-                    "t2-2",
-                );
-            });
-        });
-
         describe("#pgettext", function () {
             it("should return singular from selected context", function () {
                 assert.equal(fns.pgettext("c2", "co2-1"), "ct2-1");
-            });
-        });
-
-        describe("#dpgettext", function () {
-            it("should return singular from selected context", function () {
-                assert.equal(fns.dpgettext("messages", "c2", "co2-1"), "ct2-1");
             });
         });
 
@@ -391,7 +234,7 @@ describe("Gettext", function () {
 
         describe("#getComment", function () {
             it("should return comments object", function () {
-                assert.deepEqual(fns.getComment("messages", "", "test"), {
+                assert.deepEqual(fns.getComment("", "test"), {
                     translator: "Normal comment line 1\nNormal comment line 2",
                     extracted: "Editors note line 1\nEditors note line 2",
                     reference: "/absolute/path:13\n/absolute/path:14",
@@ -405,49 +248,37 @@ describe("Gettext", function () {
     describe("Unresolvable transaltions", function () {
         /** @type {ReturnType<Gettext["bindLocale"]>["gettext"]} */
         let gettext;
-        /** @type {ReturnType<Gettext["bindLocale"]>["dnpgettext"]} */
-        let dnpgettext;
+        /** @type {ReturnType<Gettext["bindLocale"]>["npgettext"]} */
+        let npgettext;
         beforeEach(() => {
             const fns = new Gettext({
                 translations: {
-                    "et-EE": {
-                        messages: jsonFile,
-                    },
+                    "et-EE": jsonFile,
                 },
             }).bindLocale("et-EE");
             gettext = fns.gettext;
-            dnpgettext = fns.dnpgettext;
+            npgettext = fns.npgettext;
         });
 
         it("should pass msgid when no translation is found", function () {
             assert.equal(gettext("unknown phrase"), "unknown phrase");
-            assert.equal(dnpgettext("unknown domain", null, "hello"), "hello");
-            assert.equal(
-                dnpgettext("messages", "unknown context", "hello"),
-                "hello",
-            );
+            assert.equal(npgettext("unknown context", "hello"), "hello");
 
             // we don't have a "no locale is set yet" state anymore
             // 'o2-1' is translated, but no locale has been set yet
-            // assert.equal(dnpgettext("messages", "", "o2-1"), "o2-1");
+            // assert.equal(npgettext("", "o2-1"), "o2-1");
         });
 
         it("should pass unresolved singular message when count is 1", function () {
             assert.equal(
-                dnpgettext("messages", "", "0 matches", "multiple matches", 1),
+                npgettext("", "0 matches", "multiple matches", 1),
                 "0 matches",
             );
         });
 
         it("should pass unresolved plural message when count > 1", function () {
             assert.equal(
-                dnpgettext(
-                    "messages",
-                    "",
-                    "0 matches",
-                    "multiple matches",
-                    100,
-                ),
+                npgettext("", "0 matches", "multiple matches", 100),
                 "multiple matches",
             );
         });
