@@ -231,18 +231,6 @@ describe("Gettext", function () {
                 assert.equal(fns.npgettext("c2", "co2-1", "co2-2", 2), "ct2-2");
             });
         });
-
-        describe("#getComment", function () {
-            it("should return comments object", function () {
-                assert.deepEqual(fns.getComment("", "test"), {
-                    translator: "Normal comment line 1\nNormal comment line 2",
-                    extracted: "Editors note line 1\nEditors note line 2",
-                    reference: "/absolute/path:13\n/absolute/path:14",
-                    flag: "line 1\nline 2",
-                    previous: "line 3\nline 4",
-                });
-            });
-        });
     });
 
     describe("Unresolvable transaltions", function () {

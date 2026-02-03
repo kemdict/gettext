@@ -48,28 +48,6 @@ export default class Gettext {
     sourceLocale: string;
     debug: boolean;
     /**
-     * Adds an event listener.
-     *
-     * @param  {string}   eventName  An event name
-     * @param  {Function} callback   An event handler function
-     */
-    on(eventName: string, callback: Function): void;
-    /**
-     * Removes an event listener.
-     *
-     * @param  {string}   eventName  An event name
-     * @param  {Function} callback   A previously registered event handler function
-     */
-    off(eventName: string, callback: Function): void;
-    /**
-     * Emits an event to all registered event listener.
-     *
-     * @private
-     * @param  {String} eventName  An event name
-     * @param  {any}    eventData  Data to pass to event listeners
-     */
-    private emit;
-    /**
      * Logs a warning to the console if debug mode is enabled.
      *
      * @private
@@ -137,18 +115,6 @@ export default class Gettext {
          * @return {string} Translation or the original string if no translation was found
          */
         npgettext(msgctxt: string, msgid: string, msgidPlural: string, count: number): string;
-        /**
-         * Retrieve comments object for a translation. The comments object
-         * has the shape `{ translator, extracted, reference, flag, previous }`.
-         *
-         * @example
-         *     const comment = getComment('sports', 'Backs')
-         *
-         * @param  {String} msgctxt  Translation context
-         * @param  {String} msgid    String to be translated
-         * @return {GetTextComment} Comments object or false if not found
-         */
-        getComment(msgctxt: string, msgid: string): GetTextComment;
     };
     /**
      * Return plural forms header for the current catalogs for `locale`.
@@ -162,6 +128,5 @@ export type Listener = {
     callback: Function;
 };
 export type Catalog = GetTextTranslations;
-import type { GetTextComment } from "gettext-parser";
 import type { GetTextTranslations } from "gettext-parser";
 //# sourceMappingURL=gettext.d.ts.map

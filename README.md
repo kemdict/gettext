@@ -135,12 +135,6 @@ Translate a string with context like pgettext.
 
 Translate a string with context and plural handling like npgettext.
 
-##### Translators.getComment(msgctxt, msgid)
-
-Return the comment of the translation entry for `msgid` in the context `msgctxt`.
-
-This is probably not something that a gettext runtime should expose…
-
 ### Loaders ("@kemdict/gettext/loaders.js")
 
 #### bindtextdomain(domain, ...localesDirs) → Record<string, GetTextTranslations>
