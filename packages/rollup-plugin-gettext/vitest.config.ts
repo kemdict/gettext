@@ -1,4 +1,4 @@
-import { po, mo } from "rollup-plugin-gettext";
+import { po, mo } from "./index.ts";
 
 export default {
     plugins: [po(), mo()],

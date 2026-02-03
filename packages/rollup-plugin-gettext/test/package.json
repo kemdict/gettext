@@ -1,14 +1,6 @@
 {
-  "dependencies": {
-    "@kemdict/gettext": "workspace:",
-    "rollup-plugin-gettext": "workspace:"
-  },
-  "devDependencies": {
-    "vitest": "^4.0.18"
-  },
   "scripts": {
-    "extract": "xgettext index.ts --language=javascript -o messages.pot",
-    "compile-mo": "parallel msgfmt '{}' -o mo/'{/.}'.mo ::: po/*.po",
-    "test": "vitest"
+    "extract": "xgettext index.test.ts --language=javascript -o messages.pot",
+    "compile-mo": "parallel msgfmt '{}' -o mo/'{/.}'.mo ::: po/*.po"
   }
 }

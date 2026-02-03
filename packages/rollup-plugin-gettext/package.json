@@ -24,7 +24,8 @@
     }
   },
   "scripts": {
-    "build": "tsc"
+    "build": "tsc",
+    "test": "vitest"
   },
   "peerDependencies": {
     "rollup": ">=4.38.0"
@@ -34,6 +35,7 @@
     "gettext-parser": "^9.0.0"
   },
   "devDependencies": {
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.18"
   }
 }

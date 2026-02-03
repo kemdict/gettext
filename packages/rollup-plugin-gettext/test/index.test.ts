@@ -1,6 +1,6 @@
 import { expect, test, describe } from "vitest";
 
-import Gettext from "@kemdict/gettext";
+import Gettext from "../../../lib/gettext.js";
 
 test("imports PO and MO directories with a prefix", async () => {
     const poTranslations = (await import("po:./po")).default;
@@ -15,7 +15,7 @@ test("imports PO and MO directories with a prefix", async () => {
     ]);
 });
 
-describe("loading translations", () => {
+describe("imported directories can be passed directly into @kemdict/gettext", () => {
     test("PO", async () => {
         const poTranslations = (await import("po:./po")).default;
         const { _ } = new Gettext({ translations: poTranslations }).bindLocale(
