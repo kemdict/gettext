@@ -19,10 +19,7 @@ interface PoPluginOptions {
 }
 
 export function po(options: PoPluginOptions = {}): Plugin {
-    const parsedMap = new Map<
-        string,
-        Record<string, Record<string, GetTextTranslations>>
-    >();
+    const parsedMap = new Map<string, Record<string, GetTextTranslations>>();
     return {
         name: "po",
         // This is just for a directory of PO files. A single PO file gets the
@@ -39,10 +36,7 @@ export function po(options: PoPluginOptions = {}): Plugin {
                 try {
                     // prefixed directories
                     const files = await fs.readdir(fullpath);
-                    const catalogs: Record<
-                        string,
-                        Record<string, GetTextTranslations>
-                    > = {};
+                    const catalogs: Record<string, GetTextTranslations> = {};
                     for (const file of files) {
                         if (!file.endsWith(".po")) continue;
                         const content = await fs.readFile(
@@ -52,10 +46,7 @@ export function po(options: PoPluginOptions = {}): Plugin {
                             },
                         );
                         const key = path.basename(file, ".po");
-                        // TODO: get rid of domains like python's gettext
-                        catalogs[key] = {
-                            messages: poParser.parse(content),
-                        };
+                        catalogs[key] = poParser.parse(content);
                     }
                     if (Object.keys(catalogs).length === 0) {
                         return null;
@@ -103,10 +94,7 @@ export function po(options: PoPluginOptions = {}): Plugin {
 }
 
 export function mo(options: MoPluginOptions = {}): Plugin {
-    const parsedMap = new Map<
-        string,
-        Record<string, Record<string, GetTextTranslations>>
-    >();
+    const parsedMap = new Map<string, Record<string, GetTextTranslations>>();
     return {
         name: "mo",
         resolveId: {
@@ -120,23 +108,17 @@ export function mo(options: MoPluginOptions = {}): Plugin {
                 try {
                     // prefixed directories
                     const files = await fs.readdir(fullpath);
-                    const catalogs: Record<
-                        string,
-                        Record<string, GetTextTranslations>
-                    > = {};
+                    const catalogs: Record<string, GetTextTranslations> = {};
                     for (const file of files) {
                         if (!file.endsWith(".mo")) continue;
                         const content = await fs.readFile(
                             path.join(fullpath, file),
                         );
                         const key = path.basename(file, ".mo");
-                        // TODO: get rid of domains like python's gettext
-                        catalogs[key] = {
-                            messages: moParser.parse(
-                                content,
-                                options.defaultCharset,
-                            ),
-                        };
+                        catalogs[key] = moParser.parse(
+                            content,
+                            options.defaultCharset,
+                        );
                     }
                     if (Object.keys(catalogs).length === 0) {
                         return null;

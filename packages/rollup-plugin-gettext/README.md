@@ -63,7 +63,6 @@ Types: TODO
 ## TODO
 
 - typescript types, there should be a type module that can be referenced in tsconfig or some good way to do this
-- remove domains
 
 ## Acknowledgements
 
