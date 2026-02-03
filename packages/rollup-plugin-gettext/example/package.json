@@ -1,13 +1,15 @@
 {
   "dependencies": {
-    "rollup-plugin-gettext": "workspace:",
-    "@kemdict/gettext": "workspace:"
+    "@kemdict/gettext": "workspace:",
+    "rollup-plugin-gettext": "workspace:"
   },
   "devDependencies": {
-    "vite": "^7.3.1"
+    "@rollup/plugin-node-resolve": "^16.0.3",
+    "rollup": "^4.57.1"
   },
   "scripts": {
     "extract": "xgettext index.ts --language=javascript -o messages.pot",
-    "compile-mo": "parallel msgfmt '{}' -o mo/'{/.}'.mo ::: po/*.po"
+    "compile-mo": "parallel msgfmt '{}' -o mo/'{/.}'.mo ::: po/*.po",
+    "build": "rollup -c rollup.config.ts index.ts -o index.js"
   }
 }
