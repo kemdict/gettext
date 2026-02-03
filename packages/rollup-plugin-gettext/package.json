@@ -1,7 +1,7 @@
 {
   "name": "rollup-plugin-gettext",
-  "description": "Rollup plugin to load PO or MO files via gettext-parser",
-  "version": "0.0.1",
+  "description": "Rollup loader for PO and MO files via gettext-parser",
+  "version": "0.1.0",
   "type": "module",
   "repository": {
     "type": "git",

@@ -4,9 +4,7 @@ Import PO or MO files when using Rollup or Vite, parsing translation catalogs th
 
 This does not handle extraction or translating at runtime.
 
-## Usage
-
-First, enable the plugin(s). In Vite or Rollup:
+## Config
 
 ```typescript
 // vite.config.js or rollup.config.js
@@ -15,8 +13,6 @@ export default {
   plugins: [mo(), po()] // order doesn't matter, pick either or both
 }
 ```
-
-In Astro:
 
 ```typescript
 // astro.config.js
@@ -28,7 +24,7 @@ export default {
 }
 ```
 
-Then, in your code, you can import single PO or MO files:
+## Usage
 
 ```typescript
 import de from "./locale/de.po"
@@ -64,7 +60,7 @@ Types: TODO
 - mo:
   - defaultCharset: passed into the MO file parser from `gettext-parser`.
 
-## Road to release (0.1.0)
+## TODO
 
 - typescript types, there should be a type module that can be referenced in tsconfig or some good way to do this
 - remove domains
