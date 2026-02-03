@@ -4,6 +4,7 @@
 
 ### Changes
 
+- Add a Rollup plugin, rollup-plugin-gettext
 - Set up TypeScript declarations
 - Add another GNU Hello clone which directly reads GNU Hello's installed message catalogs on the system (if any)
 - Add a `loaders` module which provides functions for loading PO files from directories
