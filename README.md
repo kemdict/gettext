@@ -111,10 +111,6 @@ Register or deregister callbacks for certain events. The callback will receive o
 
 I'm not sure how useful this is.
 
-##### gettext.warn(message)
-
-I think this is left public by my mistake, but I'll rectify this later.
-
 ##### gettext.getLocales() → string[]
 
 Return the list of locales that are in this gettext instance's catalog.
