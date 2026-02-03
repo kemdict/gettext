@@ -105,12 +105,6 @@ The main class. This class holds the loaded translation catalogs.
 
 `translations` is in the shape of `Record<string, GetTextTranslations>` where `GetTextTranslations` is the return type of `gettext-parser`'s parsers.
 
-##### gettext.on(eventName, callback), gettext.off(eventName, callback)
-
-Register or deregister callbacks for certain events. The callback will receive one argument, the data for the event. Currently the only event type is “error”, and the event data is the error message passed into `new Error(message)`.
-
-I'm not sure how useful this is.
-
 ##### gettext.getLocales() → string[]
 
 Return the list of locales that are in this gettext instance's catalog.
