@@ -1,10 +1,10 @@
 # @kemdict/gettext Changelog
 
-## v0.0.2 (unreleased)
+## v0.0.2 (2026-02-04)
 
 ### Changes
 
-- Add a Rollup plugin, rollup-plugin-gettext
+- Include a Rollup plugin, `rollup-plugin-gettext`, for importing *and bundling* PO and MO files. This plugin will be published separately.
 - Set up TypeScript declarations
 - Add another GNU Hello clone which directly reads GNU Hello's installed message catalogs on the system (if any)
 - Add a `loaders` module which provides functions for loading PO files from directories

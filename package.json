@@ -1,7 +1,7 @@
 {
   "name": "@kemdict/gettext",
   "description": "A JavaScript implementation of gettext, a localization framework",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "author": "Andris Reinman",
   "maintainers": ["Kisaragi Hiu"],
   "homepage": "http://github.com/kemdict/gettext",
