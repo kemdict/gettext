@@ -29,14 +29,16 @@ export function po(options: PoPluginOptions = {}): Plugin {
         // standard resolution.
         resolveId: {
             filter: { id: /^po:/ },
+            // handle prefixed directory imports and prefixed file imports
             async handler(source, importer) {
                 if (!importer) return null;
+                const fullpath = path.join(
+                    path.dirname(importer),
+                    source.slice("po:".length),
+                );
                 try {
-                    const fulldir = path.join(
-                        path.dirname(importer),
-                        source.slice("po:".length),
-                    );
-                    const files = await fs.readdir(fulldir);
+                    // prefixed directories
+                    const files = await fs.readdir(fullpath);
                     const catalogs: Record<
                         string,
                         Record<string, GetTextTranslations>
@@ -44,34 +46,50 @@ export function po(options: PoPluginOptions = {}): Plugin {
                     for (const file of files) {
                         if (!file.endsWith(".po")) continue;
                         const content = await fs.readFile(
-                            path.join(fulldir, file),
+                            path.join(fullpath, file),
                             {
                                 encoding: "utf8",
                             },
                         );
                         const key = path.basename(file, ".po");
                         // TODO: get rid of domains like python's gettext
-                        catalogs[key] = { messages: poParser.parse(content) };
+                        catalogs[key] = {
+                            messages: poParser.parse(content),
+                        };
                     }
                     if (Object.keys(catalogs).length === 0) {
                         return null;
                     }
-                    parsedMap.set(fulldir, catalogs);
-                    return fulldir + "?gettext-po-dir";
-                } catch (_e) {
-                    return null;
+                    parsedMap.set(fullpath, catalogs);
+                    return fullpath + "?gettext-po-dir";
+                } catch (e) {
+                    if ((e as { code: string }).code !== "ENOTDIR") return null;
+                    // prefixed files, we need to resolve this here for
+                    // absolute paths
+                    return fullpath + "?gettext-po-file";
                 }
             },
         },
         load: {
             filter: {
-                id: /(?:\.po|\?gettext-po-dir)$/,
+                id: /(?:\.po|\?gettext-po-dir|\?gettext-po-file)$/,
             },
             async handler(id) {
+                // 3 cases:
                 const parsed = id.endsWith("?gettext-po-dir")
-                    ? parsedMap.get(id.slice(0, -1 * "?gettext-po-dir".length))
+                    ? // 1: prefixed directory imports, which would have the ID
+                      // resolved like this in our resolveId
+                      parsedMap.get(id.slice(0, -1 * "?gettext-po-dir".length))
                     : poParser.parse(
-                          await fs.readFile(id, { encoding: "utf8" }),
+                          await fs.readFile(
+                              id.endsWith("?gettext-po-file")
+                                  ? // 2: prefixed file imports, strip the prefix
+                                    id.slice(0, -1 * "?gettext-po-file".length)
+                                  : // 3: unprefixed file imports, use the file
+                                    // path directly
+                                    id,
+                              { encoding: "utf8" },
+                          ),
                           options.parserOptions,
                       );
                 return dataToEsm(parsed, {
