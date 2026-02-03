@@ -7,12 +7,11 @@
  * @param {string} domain
  * @param {...string} localesDirs
  */
-export function bindtextdomain(domain: string, ...localesDirs: string[]): Record<string, Catalog>;
+export function bindtextdomain(domain: string, ...localesDirs: string[]): Record<string, import("gettext-parser").GetTextTranslations>;
 /**
  * Load PO translations from `dir`.
  * `dir` should be structured like <dir>/<locale>.po.
  * @param {string} dir
  */
-export function loadTranslations(dir: string): Record<string, Catalog>;
-import type { Catalog } from "./gettext.js";
+export function loadTranslations(dir: string): Record<string, import("gettext-parser").GetTextTranslations>;
 //# sourceMappingURL=loaders.d.ts.map
