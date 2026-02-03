@@ -1,4 +1,4 @@
 packages:
   - "examples/*"
   - "packages/*"
-  - "packages/*/example"
+  - "packages/rollup-plugin-gettext/test"

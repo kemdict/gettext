@@ -4,13 +4,11 @@
     "rollup-plugin-gettext": "workspace:"
   },
   "devDependencies": {
-    "@rollup/plugin-node-resolve": "^16.0.3",
-    "rollup": "^4.57.1"
+    "vitest": "^4.0.18"
   },
   "scripts": {
     "extract": "xgettext index.ts --language=javascript -o messages.pot",
     "compile-mo": "parallel msgfmt '{}' -o mo/'{/.}'.mo ::: po/*.po",
-    "build": "rollup -c rollup.config.ts index.ts -o index.js",
-    "run": "npm run build && node index.js"
+    "test": "vitest"
   }
 }
