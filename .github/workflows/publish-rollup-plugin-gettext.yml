@@ -21,6 +21,7 @@ jobs:
           cache: "pnpm"
       - name: Install packages
         run: |
+          apt-get install gettext
           cd packages/rollup-plugin-gettext
           pnpm install
       - name: Build
