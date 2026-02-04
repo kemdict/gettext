@@ -25,8 +25,8 @@
     "./module-types": { "types": "./module-types.d.ts" }
   },
   "scripts": {
-    "build": "tsc",
-    "test": "vitest"
+    "build": "tsc -p tsconfig.lib.json",
+    "test": "tsc && vitest run --typecheck"
   },
   "peerDependencies": {
     "rollup": ">=4.38.0"

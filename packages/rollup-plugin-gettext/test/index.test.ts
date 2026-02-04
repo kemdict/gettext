@@ -1,10 +1,17 @@
-import { expect, it, describe } from "vitest";
+import { expect, expectTypeOf, it, describe } from "vitest";
 
 import Gettext from "../../../lib/gettext.js";
+import type { GetTextTranslations } from "gettext-parser";
 
 it("imports PO and MO directories with a prefix", async () => {
     const poTranslations = (await import("po:./po")).default;
     const moTranslations = (await import("mo:./mo")).default;
+    expectTypeOf(poTranslations).toEqualTypeOf<
+        Record<string, GetTextTranslations>
+    >();
+    expectTypeOf(moTranslations).toEqualTypeOf<
+        Record<string, GetTextTranslations>
+    >();
     expect(Object.keys(poTranslations).sort()).toStrictEqual([
         "nan_TW",
         "zh_TW",
@@ -37,6 +44,8 @@ it("imports PO and MO files without prefix", async () => {
     const oneMoNoPrefix = (await import("./mo/nan_TW.mo")).default;
     expect(onePoNoPrefix.headers["Language"]).toEqual("zh_TW");
     expect(oneMoNoPrefix.headers["Language"]).toEqual("nan_TW");
+    expectTypeOf(onePoNoPrefix).toEqualTypeOf<GetTextTranslations>();
+    expectTypeOf(oneMoNoPrefix).toEqualTypeOf<GetTextTranslations>();
 });
 
 it("imports PO and MO files with prefix", async () => {
@@ -44,4 +53,6 @@ it("imports PO and MO files with prefix", async () => {
     const oneMoWithPrefix = (await import("mo:./mo/nan_TW.mo")).default;
     expect(onePoWithPrefix.headers["Language"]).toEqual("zh_TW");
     expect(oneMoWithPrefix.headers["Language"]).toEqual("nan_TW");
+    expectTypeOf(onePoWithPrefix).toEqualTypeOf<GetTextTranslations>();
+    expectTypeOf(oneMoWithPrefix).toEqualTypeOf<GetTextTranslations>();
 });

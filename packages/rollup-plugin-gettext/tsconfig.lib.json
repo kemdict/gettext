@@ -1,0 +1,13 @@
+{
+  // tsconfig but only for building index.ts
+  "extends": "../../tsconfig.json",
+  "files": ["index.ts"],
+  "include": [],
+  "compilerOptions": {
+    "allowImportingTsExtensions": false,
+    "declaration": true,
+    "emitDeclarationOnly": false,
+    "declarationMap": true,
+    "outDir": "./dist"
+  }
+}
