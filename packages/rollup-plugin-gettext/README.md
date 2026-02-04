@@ -24,6 +24,8 @@ export default {
 }
 ```
 
+To get types for the data imported with this plugin, add a `/// <reference types="rollup-plugin-gettext/module-types />"` to a global declaration file or to the file where you're importing them, or put it into `lib` in `tsconfig.json`.
+
 ## Usage
 
 ```typescript
@@ -48,8 +50,6 @@ this will import each of the PO files in the directory, and make them available 
 
 The translations imported this way can be passed directly into the `@kemdict/gettext` runtime.
 
-Types: TODO
-
 ## Options
 
 - po:
@@ -60,11 +60,8 @@ Types: TODO
 - mo:
   - defaultCharset: passed into the MO file parser from `gettext-parser`.
 
-## TODO
-
-- typescript types, there should be a type module that can be referenced in tsconfig or some good way to do this
-
 ## Acknowledgements
 
 - I referenced [@miyaneee/rollup-plugin-json5](https://github.com/Miyaneee/rollup-plugin-json5) for how a Rollup plugin like this should be structured (that plugin seems to also be based on @rollup/json)
 - I referenced @rollup/data-uri and [rollup-plugin-glob-import](https://github.com/gjbkz/rollup-plugin-glob-import) as well as @rollup/image for how to load data
+- https://github.com/figma/vite-plugin-yaml for how to set up types
