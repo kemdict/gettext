@@ -22,7 +22,9 @@
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
     },
-    "./types": { "types": "./types.d.ts" }
+    "./types": {
+      "types": "./types.d.ts"
+    }
   },
   "peerDependencies": {
     "rollup": ">=4.38.0"
@@ -32,6 +34,7 @@
     "gettext-parser": "^9.0.0"
   },
   "devDependencies": {
+    "publint": "^0.3.17",
     "typescript": "^5.9.3",
     "vitest": "^4.0.18"
   }

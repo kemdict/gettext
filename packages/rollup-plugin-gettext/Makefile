@@ -7,3 +7,7 @@ build:
 test:
 	npx tsc
 	npx vitest run --typecheck
+
+publish: build
+	npx publint
+	npm publish
