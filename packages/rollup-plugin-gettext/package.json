@@ -22,7 +22,7 @@
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
     },
-    "./module-types": { "types": "./module-types.d.ts" }
+    "./types": { "types": "./types.d.ts" }
   },
   "scripts": {
     "build": "tsc -p tsconfig.lib.json",

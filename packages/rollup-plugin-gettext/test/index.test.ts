@@ -3,6 +3,9 @@ import { expect, expectTypeOf, it, describe } from "vitest";
 import Gettext from "../../../lib/gettext.js";
 import type { GetTextTranslations } from "gettext-parser";
 
+// We don't have to <reference/> the module declarations because typescript
+// already automatically loads it for us, it seems.
+
 it("imports PO and MO directories with a prefix", async () => {
     const poTranslations = (await import("po:./po")).default;
     const moTranslations = (await import("mo:./mo")).default;

@@ -24,7 +24,7 @@ export default {
 }
 ```
 
-To get types for the data imported with this plugin, add a `/// <reference types="rollup-plugin-gettext/module-types />"` to a global declaration file or to the file where you're importing them, or put it into `lib` in `tsconfig.json`.
+To get types for the data imported with this plugin, add a `/// <reference types="rollup-plugin-gettext/types />"` to a global declaration file or to the file where you're importing them, or put `"rollup-plugin-gettext/types"` into `lib` in `tsconfig.json`.
 
 ## Usage
 
