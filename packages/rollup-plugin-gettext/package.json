@@ -24,10 +24,6 @@
     },
     "./types": { "types": "./types.d.ts" }
   },
-  "scripts": {
-    "build": "tsc -p tsconfig.lib.json",
-    "test": "tsc && vitest run --typecheck"
-  },
   "peerDependencies": {
     "rollup": ">=4.38.0"
   },
