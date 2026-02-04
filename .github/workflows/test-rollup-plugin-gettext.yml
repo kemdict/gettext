@@ -1,0 +1,30 @@
+name: Publish
+on:
+  push:
+    paths:
+      - "packages/rollup-plugin-gettext/**"
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: "pnpm"
+      - name: Install packages
+        run: |
+          cd packages/rollup-plugin-gettext
+          pnpm install
+      - name: Build
+        run: |
+          cd packages/rollup-plugin-gettext
+          make build
+      - name: Test
+        run: |
+          cd packages/rollup-plugin-gettext
+          make test
