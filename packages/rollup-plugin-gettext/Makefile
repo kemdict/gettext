@@ -1,7 +1,8 @@
+.PHONY: test build publish
+
 build:
 	npx tsc -p tsconfig.lib.json
 
-.PHONY: test build
 # for some reason vitest --typecheck doesn't actually fail when there are type
 # errors for me, so I'm running tsc here as a workaround
 test:
