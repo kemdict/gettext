@@ -13,7 +13,7 @@
   },
   "author": "Kisaragi Hiu <mail@kisaragi-hiu.com>",
   "license": "MIT",
-  "files": ["dist", "README.md", "LICENSE", "package.json"],
+  "files": ["dist", "types.d.ts", "README.md", "LICENSE", "package.json"],
   "keywords": ["rollup-plugin", "vite-plugin", "gettext"],
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
