@@ -8,6 +8,6 @@ test:
 	npx tsc
 	npx vitest run --typecheck
 
-publish: build
+publish:
 	npx publint
 	npm publish
