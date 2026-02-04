@@ -1,0 +1,5 @@
+extract:
+	xgettext index.test.ts --language=javascript -o messages.pot
+
+compile-mo:
+	parallel msgfmt '{}' -o mo/'{/.}'.mo ':::' po/*.po

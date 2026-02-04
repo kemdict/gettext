@@ -4,7 +4,7 @@ build:
 	npx tsc -p tsconfig.lib.json
 
 test/mo:
-	cd test && npm run compile-mo
+	cd test && $(MAKE) compile-mo
 
 # for some reason vitest --typecheck doesn't actually fail when there are type
 # errors for me, so I'm running tsc here as a workaround
