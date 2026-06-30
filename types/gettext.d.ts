@@ -6,7 +6,7 @@
  */
 export function guessEnvLocale(env?: Record<string, string | undefined>): string[] | undefined;
 /**
- * @import { GetTextTranslations, GetTextComment } from "gettext-parser";
+ * @import { GetTextTranslations } from "gettext-parser";
  * @typedef {string} Locale
  * @typedef {{ eventName: string, callback: Function }} Listener
  * @typedef {GetTextTranslations} Catalog
@@ -47,13 +47,6 @@ export default class Gettext {
     listeners: Array<Listener>;
     sourceLocale: string;
     debug: boolean;
-    /**
-     * Logs a warning to the console if debug mode is enabled.
-     *
-     * @private
-     * @param  {String} message  A warning message
-     */
-    private warn;
     /**
      * Return locales currently added to the catalogs.
      */
@@ -121,6 +114,7 @@ export default class Gettext {
      * @param {string} locale - The locale name
      */
     _getCatalogPluralForms(locale: string): import("./plural-data.js").PluralFormsObj;
+    #private;
 }
 export type Locale = string;
 export type Listener = {
