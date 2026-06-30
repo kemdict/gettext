@@ -16,7 +16,7 @@ Pages would need to somehow pass the context into components, either manually or
 bindLocale seriously needs to not completely reinitialize the functions.
 ** SvelteKit example
 ** Extraction from Astro
-** Per-string fallbacks
+** DONE Per-string fallbacks
 * Example project / sandboxes for SvelteKit
 * Extraction command
 
