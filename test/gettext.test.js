@@ -128,7 +128,7 @@ describe("Gettext", function () {
     var jsonFile;
 
     beforeEach(function () {
-        gt = new Gettext({ debug: false });
+        gt = new Gettext();
         jsonFile = JSON.parse(
             fs.readFileSync(import.meta.dirname + "/fixtures/latin13.json", {
                 encoding: "utf-8",

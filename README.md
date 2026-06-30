@@ -83,13 +83,11 @@ Guess or lookup the preferred language list from environment variables.
 
 `env` defaults to `process.env`.
 
-#### class Gettext({ sourceLocale, translations, debug })
+#### class Gettext({ sourceLocale, translations })
 
 The main class. This class holds the loaded translation catalogs.
 
 `sourceLocale` specifies which locale source text is written in. I am not sure this is necessary or useful.
-
-`debug` being true means to be verbose and warn about stuff at runtime.
 
 `translations` is in the shape of `Record<string, GetTextTranslations>` where `GetTextTranslations` is the return type of `gettext-parser`'s parsers.
 
