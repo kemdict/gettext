@@ -1,0 +1,31 @@
+#!/usr/bin/env -S deno run -A
+// deno-lint-ignore-file no-import-prefix no-unversioned-import
+
+import { $, chalk } from "npm:zx";
+import { po } from "npm:gettext-parser";
+import fs from "node:fs";
+import Gettext from "../lib/gettext.js";
+
+async function download() {
+    const $$ = $({ verbose: true });
+    await $$`svn checkout svn+ssh://svn@svn.kde.org/home/kde/trunk/l10n-kf6 -rHEAD l10n-kf6`;
+}
+
+function loadFile(path: string) {
+    const translations = po.parse(fs.readFileSync(path));
+    const language = (translations.headers["Language"] as string) || "unset";
+    return {
+        [language]: translations,
+    };
+}
+
+for (const path of (await $({ nothrow: true })`fd --no-ignore -e po`).stdout
+    .split("\n")
+    .filter(Boolean)) {
+    try {
+        new Gettext({ translations: loadFile(path) });
+    } catch (e) {
+        console.log(`${chalk.bold("Error")} reading ${chalk.cyan(path)}:`);
+        console.log(chalk.gray((e as { message: string }).message));
+    }
+}
