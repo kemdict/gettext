@@ -3,7 +3,6 @@
   "compilerOptions": {
     "module": "nodenext",
     "target": "esnext",
-    "sourceMap": true,
     "strict": true,
     "checkJs": true,
     "jsx": "react-jsx",
@@ -14,10 +13,6 @@
     "skipLibCheck": true,
     "allowJs": true,
     "allowImportingTsExtensions": true,
-    "declaration": true,
-    "emitDeclarationOnly": true,
-    "declarationMap": true,
-    "rootDir": "./lib",
-    "outDir": "./types"
+    "sourceMap": true
   }
 }
