@@ -298,6 +298,10 @@ describe("Tests using examples", () => {
             const { _ } = gt.bindLocale("C");
             assert.equal(_("Hello world!"), "Hello world!");
         });
+        it('should return msgid for "C.UTF-8" locale', () => {
+            const { _ } = gt.bindLocale("C.UTF-8");
+            assert.equal(_("Hello world!"), "Hello world!");
+        });
         it('should return msgid for "POSIX" locale', () => {
             const { _ } = gt.bindLocale("POSIX");
             assert.equal(_("Hello world!"), "Hello world!");
