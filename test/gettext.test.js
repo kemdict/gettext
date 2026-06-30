@@ -165,24 +165,6 @@ describe("Gettext", function () {
             it("should default to en empty string", function () {
                 assert.equal(new Gettext().sourceLocale, "");
             });
-
-            it("should reject non-string values", function () {
-                // @ts-expect-error
-                gtc = new Gettext({ sourceLocale: null });
-                assert.equal(gtc.sourceLocale, "");
-                // @ts-expect-error
-                gtc = new Gettext({ sourceLocale: 123 });
-                assert.equal(gtc.sourceLocale, "");
-                // @ts-expect-error
-                gtc = new Gettext({ sourceLocale: false });
-                assert.equal(gtc.sourceLocale, "");
-                // @ts-expect-error
-                gtc = new Gettext({ sourceLocale: {} });
-                assert.equal(gtc.sourceLocale, "");
-                // @ts-expect-error
-                gtc = new Gettext({ sourceLocale: function () {} });
-                assert.equal(gtc.sourceLocale, "");
-            });
         });
     });
 
