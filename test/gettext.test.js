@@ -254,3 +254,53 @@ describe("Gettext", function () {
         });
     });
 });
+
+describe("Tests using examples", () => {
+    /** @type {Gettext} */
+    let gt;
+    beforeEach(async () => {
+        const { loadTranslations } = await import("../lib/loaders.js");
+        gt = new Gettext({
+            translations: loadTranslations(
+                import.meta.dirname + "/../examples/hello/po",
+            ),
+        });
+    });
+    describe("Fallback to another specified language", () => {
+        it("Singular", () => {
+            const { _ } = gt.bindLocale(["xx-test", "ja"]);
+            console.log(gt.getLocales());
+            assert.equal(_("Hello world!"), "世界へようこそ！");
+        });
+        it("Plural", () => {
+            const { ngettext } = gt.bindLocale(["xx-test", "ja"]);
+            console.log(gt.getLocales());
+            assert.equal(
+                ngettext(
+                    "You provided %s positional argument.",
+                    "You provided %s positional arguments.",
+                    1,
+                ),
+                "From xx-test: %1 positional argument.",
+            );
+            assert.equal(
+                ngettext(
+                    "You provided %s positional argument.",
+                    "You provided %s positional arguments.",
+                    2,
+                ),
+                "%s 個の引数を提供しました。",
+            );
+        });
+    });
+    describe("C and POSIX locales", () => {
+        it('should return msgid for "C" locale', () => {
+            const { _ } = gt.bindLocale("C");
+            assert.equal(_("Hello world!"), "Hello world!");
+        });
+        it('should return msgid for "POSIX" locale', () => {
+            const { _ } = gt.bindLocale("POSIX");
+            assert.equal(_("Hello world!"), "Hello world!");
+        });
+    });
+});
