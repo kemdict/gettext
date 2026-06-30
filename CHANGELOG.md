@@ -2,11 +2,21 @@
 
 ## v0.0.3 (unreleased)
 
+### Feature
+
+- Fall back to another language instead of straight to source text if it is untranslated.
+
+  Previously, if multiple languages are specified (such as `ja:zh_TW:de:en`), the first language with a catalog would be chosen (let's say `zh_TW`), but then if a string isn't translated in that catalog it would fall straight back onto source text, instead of falling back onto the next language (in this case `de`).
+
+  Making it fall back onto the next language matches the original Gettext.
+
 ### Removals
 
 - Remove .getComment, which doesn't really make sense in a gettext runtime.
 - Remove the event system (gettext.on, gettext.off, gettext.emit). It has only ever been used for errors, and adds complexity for something that I don't see any use of.
 - Remove domains. Domains in upstream gettext is for loading multiple catalogs in the same app (same process), with there only being one “gettext instance”. In a class-based approach where you could just initialize a separate instance if you really need multiple message catalogs, domains are not necessary. As an example, Python's builtin gettext implementation also doesn't implement domains.
+- Remove warnings about simply falling back to source text or another language.
+- As all uses of the `.warn` method are gone, also remove gettext.warn.
 
 ## v0.0.2 (2026-02-04)
 
