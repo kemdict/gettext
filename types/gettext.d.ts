@@ -114,7 +114,6 @@ export default class Gettext {
      * @param {string} locale - The locale name
      */
     _getCatalogPluralForms(locale: string): import("./plural-data.js").PluralFormsObj;
-    #private;
 }
 export type Locale = string;
 export type Listener = {
