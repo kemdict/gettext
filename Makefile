@@ -1,3 +1,5 @@
+.PHONY: fmt test test.coverage build
+
 fmt:
 	prettier -w ./lib
 
