@@ -1,0 +1,2 @@
+overrides:
+  gettext-parser: "https://github.com/kisaragi-hiu/gettext-parser#fix-obsolete-previous"

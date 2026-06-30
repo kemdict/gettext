@@ -1,8 +1,5 @@
-#!/usr/bin/env -S deno run -A
-// deno-lint-ignore-file no-import-prefix no-unversioned-import
-
-import { $, chalk } from "npm:zx";
-import { po } from "npm:gettext-parser";
+import { $, chalk } from "zx";
+import { po } from "gettext-parser";
 import fs from "node:fs";
 import Gettext from "../lib/gettext.js";
 
@@ -19,9 +16,15 @@ function loadFile(path: string) {
     };
 }
 
-for (const path of (await $({ nothrow: true })`fd --no-ignore -e po`).stdout
+const files = (await $({ nothrow: true })`fd --no-ignore -e po`).stdout
     .split("\n")
-    .filter(Boolean)) {
+    .filter(Boolean);
+let percentage: number | undefined = undefined;
+for (let i = 1; i <= files.length; i++) {
+    const path = files[i];
+    const nextPercentage = Math.floor(100 * (i / files.length));
+    if (percentage !== nextPercentage) console.error(`${nextPercentage}%`);
+    percentage = nextPercentage;
     try {
         new Gettext({ translations: loadFile(path) });
     } catch (e) {

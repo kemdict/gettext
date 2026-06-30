@@ -1,0 +1,4 @@
+{
+  "dependencies": { "gettext-parser": "^9.0.0", "zx": "^8.8.5" },
+  "type": "module"
+}

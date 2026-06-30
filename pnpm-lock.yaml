@@ -94,6 +94,15 @@ importers:
         specifier: ^4.0.18
         version: 4.0.18(@types/node@26.0.1)
 
+  test-kde-svn:
+    dependencies:
+      gettext-parser:
+        specifier: ^9.0.0
+        version: 9.0.0
+      zx:
+        specifier: ^8.8.5
+        version: 8.8.5
+
 packages:
 
   '@astrojs/compiler@2.13.0':
