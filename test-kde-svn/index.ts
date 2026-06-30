@@ -20,13 +20,14 @@ const files = (await $({ nothrow: true })`fd --no-ignore -e po`).stdout
     .split("\n")
     .filter(Boolean);
 let percentage: number | undefined = undefined;
-for (let i = 1; i <= files.length; i++) {
+for (let i = 0; i < files.length; i++) {
     const path = files[i];
-    const nextPercentage = Math.floor(100 * (i / files.length));
+    const nextPercentage = Math.floor(100 * ((i + 1) / files.length));
     if (percentage !== nextPercentage) console.error(`${nextPercentage}%`);
     percentage = nextPercentage;
     try {
-        new Gettext({ translations: loadFile(path) });
+        const gt = new Gettext({ translations: loadFile(path) });
+        gt._getCatalogPluralForms([...gt.getLocales()][0]);
     } catch (e) {
         console.log(`${chalk.bold("Error")} reading ${chalk.cyan(path)}:`);
         console.log(chalk.gray((e as { message: string }).message));

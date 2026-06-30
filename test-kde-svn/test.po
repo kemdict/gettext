@@ -1,0 +1,4 @@
+msgid ""
+msgstr ""
+"Language: test\n"
+"Plural-Forms: nplurals=2; plural=n==1?0:n==3?1:n==5?2:3;\n"
