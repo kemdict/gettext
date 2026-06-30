@@ -57,16 +57,6 @@ gettext('The world is a funny place')
 // -> "Världen är en underlig plats"
 ```
 
-### Error events
-
-```js
-// Add translations etc...
-
-gt.on('error', error => console.log('oh nose', error))
-gettext('An unrecognized message')
-// -> 'oh nose', 'An unrecognized message'
-```
-
 ### Recipes
 
 #### Load and add translations from .mo or .po files
