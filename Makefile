@@ -12,4 +12,8 @@ test.coverage:
 		test/gettext.test.js
 
 build:
-	tsc -p tsconfig.lib.json
+	npx tsc -p tsconfig.lib.json
+
+publish:
+	npx publint
+	npm publish
