@@ -14,9 +14,10 @@ I do not commit to any backwards compatibility whatsoever at this early stage.
 
 ## Features
 
-* Supports contexts and plurals
-* Load translations in the format returned by [gettext-parser](https://github.com/smhg/gettext-parser), so .json, .mo, and .po files can all be loaded
-* Use plural forms from the PO file, with fallback for many languages
+- Supports contexts and plurals
+- Load translations in the format returned by [gettext-parser](https://github.com/smhg/gettext-parser), so .json, .mo, and .po files can all be loaded
+- Use plural forms from the PO file, with fallback for many languages
+  - Safe by default (there is effectively an allowlist of `plurals=` expressions), if more complicated expressions are needed and you trust the PO files then use trusted mode.
 
 ### Comparison with GNU gettext and node-gettext
 
@@ -83,13 +84,15 @@ Guess or lookup the preferred language list from environment variables.
 
 `env` defaults to `process.env`.
 
-#### class Gettext({ sourceLocale, translations })
+#### class Gettext({ sourceLocale, translations, trusted })
 
 The main class. This class holds the loaded translation catalogs.
 
 `sourceLocale` specifies which locale source text is written in. I am not sure this is necessary or useful.
 
 `translations` is in the shape of `Record<string, GetTextTranslations>` where `GetTextTranslations` is the return type of `gettext-parser`'s parsers.
+
+`trusted` specifies whether the PO file is trusted to be safe. By default the Plural-Forms expression is matched against a lookup table; with `trusted` as true the Plural-Forms expression will be directly used to create a JS function.
 
 ##### gettext.getLocales() → string[]
 

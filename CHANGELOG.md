@@ -10,6 +10,10 @@
 
   Making it fall back onto the next language matches the original Gettext.
 
+- More plural forms are supported.
+
+- *Trusted mode* for running plural forms as JS expressions.
+
 ### Removals
 
 - Remove .getComment, which doesn't really make sense in a gettext runtime.

@@ -26,7 +26,7 @@ for (let i = 0; i < files.length; i++) {
     if (percentage !== nextPercentage) console.error(`${nextPercentage}%`);
     percentage = nextPercentage;
     try {
-        const gt = new Gettext({ translations: loadFile(path) });
+        const gt = new Gettext({ translations: loadFile(path), trusted: true });
         gt._getCatalogPluralForms([...gt.getLocales()][0]);
     } catch (e) {
         console.log(`${chalk.bold("Error")} reading ${chalk.cyan(path)}:`);
