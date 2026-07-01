@@ -32,7 +32,7 @@
     "typescript": "^6.0.3"
   },
   "engine": {
-    "node": ">=24"
+    "node": ">=26"
   },
   "keywords": [
     "i18n",
