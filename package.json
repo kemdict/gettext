@@ -13,7 +13,7 @@
   },
   "type": "module",
   "license": "MIT",
-  "files": ["lib", "test", "types", "README.md", "LICENSE", "package.json"],
+  "files": ["lib", "types", "README.md", "LICENSE", "package.json"],
   "exports": {
     ".": {
       "types": "./types/gettext.d.ts",
