@@ -1,15 +1,19 @@
 {
   "name": "@kemdict/gettext",
   "description": "A JavaScript implementation of gettext, a localization framework",
-  "version": "0.0.2",
-  "author": "Andris Reinman",
-  "maintainers": ["Kisaragi Hiu"],
+  "version": "0.1.0",
+  "//": "Messy setup for this fork. The original author Andris Reinman is the original author but not the one responsible for this fork.",
+  "author": "Kisaragi Hiu",
+  "contributors": ["Andris Reinman", "Kisaragi Hiu"],
+  "maintainers": ["Kisaragi Hiu <mail@kisaragi-hiu.com>"],
   "homepage": "http://github.com/kemdict/gettext",
   "repository": {
     "type": "git",
-    "url": "http://github.com/kemdict/gettext.git"
+    "url": "git+https://github.com/kemdict/gettext.git"
   },
   "type": "module",
+  "license": "MIT",
+  "files": ["lib", "test", "types", "README.md", "LICENSE", "package.json"],
   "exports": {
     ".": {
       "types": "./types/gettext.d.ts",
@@ -20,13 +24,6 @@
       "default": "./lib/loaders.js"
     }
   },
-  "files": ["lib", "test"],
-  "licenses": [
-    {
-      "type": "MIT",
-      "url": "http://github.com/kemdict/gettext/blob/master/LICENSE"
-    }
-  ],
   "devDependencies": {
     "@types/gettext-parser": "^8.0.0",
     "@types/node": "^26.0.1",

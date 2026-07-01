@@ -1,6 +1,6 @@
 # @kemdict/gettext Changelog
 
-## v0.0.3 (unreleased)
+## v0.1.0 (2026-07-02)
 
 ### Feature
 
