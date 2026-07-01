@@ -1,7 +1,7 @@
 {
   "name": "@kemdict/gettext",
   "description": "A JavaScript implementation of gettext, a localization framework",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "type": "module",
   "repository": {
     "type": "git",
