@@ -1,4 +1,4 @@
-name: Test
+name: Test @kemdict/gettext
 on:
   push:
     paths:

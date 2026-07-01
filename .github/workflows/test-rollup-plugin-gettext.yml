@@ -1,4 +1,4 @@
-name: Test
+name: Test rollup-plugin-gettext
 on:
   push:
     paths:

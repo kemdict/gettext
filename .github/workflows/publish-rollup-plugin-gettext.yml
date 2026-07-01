@@ -1,4 +1,4 @@
-name: Publish
+name: Publish rollup-plugin-gettext
 on:
   push:
     tags:
