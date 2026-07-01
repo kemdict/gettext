@@ -32,6 +32,7 @@
     "@types/node": "^26.0.1",
     "gettext-parser": "^9.0.0",
     "prettier": "^3.7.4",
+    "publint": "^0.3.17",
     "typescript": "^6.0.3"
   },
   "engine": {
