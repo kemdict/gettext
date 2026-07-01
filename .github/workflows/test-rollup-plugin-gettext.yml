@@ -3,6 +3,7 @@ on:
   push:
     paths:
       - "packages/rollup-plugin-gettext/**"
+  workflow_dispatch:
 
 jobs:
   test:

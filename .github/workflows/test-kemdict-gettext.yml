@@ -4,6 +4,7 @@ on:
     paths:
       - "lib/**"
       - "test/**"
+  workflow_dispatch:
 
 jobs:
   test:
