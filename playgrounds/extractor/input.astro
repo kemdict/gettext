@@ -1,0 +1,17 @@
+---
+const { _ } = gt.bindLocale("zh_TW")
+_("hello")
+// TRANSLATORS: This comment should be included
+const message = _("world")
+// xgettext: no-space-ellipsis-check
+const message2 = _("worldd")
+const message3 = _("worldd")
+---
+
+<div class={_(`I don't think this works`)}>{_("another message")}</div>
+<div>{_(
+  // TRANSLATORS: I expect this to be kept
+  "foo"
+)}</div>
+<!-- Does this work? xgettext supports TSX. -->
+<div>{ thing(<div>test</div>) }</div>

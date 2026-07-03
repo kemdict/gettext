@@ -1,10 +1,15 @@
+#!/usr/bin/env -S deno run -A
 // playground for extracting function calls in a way similar to ts-blank-space
 // FIXME: the comments are not kept (except incidentally when inside of a call)
 
-import { parse as parseSvelte } from "svelte/compiler";
 import { parse as parseAstro } from "@astrojs/compiler-rs";
 import { walk } from "estree-walker";
-import type { Node, CallExpression, Comment } from "estree";
+import fs from "node:fs";
+
+import { parse as parseSvelte } from "svelte/compiler";
+import { $ } from "zx";
+// actually from @types/estree; "estree" does not exist as a package
+import type { CallExpression, Comment, Node } from "estree";
 
 type Range = { start: number; end: number };
 type WithRange<T> = T & Range;
@@ -68,46 +73,21 @@ function transform(input: string, node: Node) {
     return out;
 }
 
-const sourceSvelte = `
-<script>
-const { _ } = gt.bindLocale("zh_TW")
-_("hello")
-// TRANSLATORS: This comment should be included
-const message = _("world")
-// xgettext: no-space-ellipsis-check
-const message2 = _("worldd")
-const message3 = _("worldd")
-</script>
-
-<div class={_(\`I don't think this works\`)}>{_("another message")}</div>
-<div>{_(
-  // TRANSLATORS: I expect this to be kept
-  "foo"
-)}</div>
-`;
-console.log(`Svelte:
-${transform(
+const sourceSvelte = fs.readFileSync("./input.svelte", { encoding: "utf-8" });
+const transformedSvelte = transform(
     sourceSvelte,
     parseSvelte(sourceSvelte, { modern: true }) as unknown as Node,
-)}`);
-const sourceAstro = `
----
-const { _ } = gt.bindLocale("zh_TW")
-_("hello")
-// TRANSLATORS: This comment should be included
-const message = _("world")
-// xgettext: no-space-ellipsis-check
-const message2 = _("worldd")
-const message3 = _("worldd")
----
+);
+const sourceAstro = fs.readFileSync("./input.astro", { encoding: "utf-8" });
+const transformedAstro = transform(
+    sourceAstro,
+    parseAstro(sourceAstro).ast as Node,
+);
 
-<div class={_(\`I don't think this works\`)}>{_("another message")}</div>
-<div>{_(
-  // TRANSLATORS: I expect this to be kept
-  "foo"
-)}</div>
-<!-- Does this work? xgettext supports TSX. -->
-<div>{ thing(<div>test</div>) }</div>
-`;
-console.log(`Astro:
-${transform(sourceAstro, parseAstro(sourceAstro).ast as Node)}`);
+// Unfortunately xgettext doesn't allow you to specify the file name in case you
+// piped the text in.
+// (Also, for some reason `-L typescript` always fails when reading from stdin.)
+fs.writeFileSync("transformedSvelte", transformedSvelte);
+await $({
+    nothrow: true,
+})`xgettext -L typescript transformedSvelte -o template.pot`;

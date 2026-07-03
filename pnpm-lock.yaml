@@ -111,6 +111,9 @@ importers:
       svelte:
         specifier: ^5.56.4
         version: 5.56.4
+      zx:
+        specifier: ^8.8.5
+        version: 8.8.5
 
   playgrounds/test-kde-svn:
     dependencies:
