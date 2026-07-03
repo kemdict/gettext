@@ -1,27 +1,35 @@
 // playground for extracting function calls in a way similar to ts-blank-space
+// FIXME: the comments are not kept (except incidentally when inside of a call)
 
 import { parse as parseSvelte } from "svelte/compiler";
 import { parse as parseAstro } from "@astrojs/compiler-rs";
 import { walk } from "estree-walker";
-import type { Node, CallExpression } from "estree";
+import type { Node, CallExpression, Comment } from "estree";
 
-type WithRange<T> = T & { start: number; end: number };
+type Range = { start: number; end: number };
+type WithRange<T> = T & Range;
 
-/** Return an array of all CallExpressions in `ast`. */
-function getCallExpressions(ast: Node) {
-    const expressions: WithRange<CallExpression>[] = [];
+/** Return ranges to keep in the text that `ast` corresponds to. */
+function getRanges(ast: Node) {
+    const ranges: Range[] = [];
     walk(ast, {
         enter(node) {
+            if (node.leadingComments) {
+                for (const comment of node.leadingComments as WithRange<Comment>[]) {
+                    ranges.push(comment);
+                }
+            }
             if (
                 node.type === "CallExpression" ||
                 node.type === "NewExpression"
             ) {
-                expressions.push(node as WithRange<CallExpression>);
+                ranges.push(node as WithRange<CallExpression>);
                 this.skip();
             }
         },
     });
-    return expressions;
+    // earliest first
+    return ranges.sort((a, b) => a.start - b.start);
 }
 
 /** Return spaces that would keep the locations in the string intact,
@@ -49,9 +57,9 @@ function getSpace(input: string, start: number, end: number): string {
 function transform(input: string, node: Node) {
     let previousEnd = 0;
     let out = "";
-    for (const expr of getCallExpressions(node)) {
-        const start = Math.max(expr.start, previousEnd);
-        const end = expr.end;
+    for (const range of getRanges(node)) {
+        const start = Math.max(range.start, previousEnd);
+        const end = range.end;
         // replace each *codepoint* with a space in the output
         out += getSpace(input, previousEnd, start);
         out += input.slice(start, end);
@@ -77,10 +85,11 @@ const message3 = _("worldd")
   "foo"
 )}</div>
 `;
-transform(
+console.log(`Svelte:
+${transform(
     sourceSvelte,
     parseSvelte(sourceSvelte, { modern: true }) as unknown as Node,
-);
+)}`);
 const sourceAstro = `
 ---
 const { _ } = gt.bindLocale("zh_TW")
@@ -97,5 +106,8 @@ const message3 = _("worldd")
   // TRANSLATORS: I expect this to be kept
   "foo"
 )}</div>
+<!-- Does this work? xgettext supports TSX. -->
+<div>{ thing(<div>test</div>) }</div>
 `;
-transform(sourceAstro, parseAstro(sourceAstro).ast as Node);
+console.log(`Astro:
+${transform(sourceAstro, parseAstro(sourceAstro).ast as Node)}`);
