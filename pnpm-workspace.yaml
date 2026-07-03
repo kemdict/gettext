@@ -1,6 +1,7 @@
 packages:
   - "examples/*"
   - "packages/*"
+  - "playgrounds/*"
 allowBuilds:
   esbuild: true
   sharp: true
