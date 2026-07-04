@@ -1,5 +1,15 @@
 # @kemdict/gettext Changelog
 
+## v0.1.3 (2026-07-04)
+
+Add fallback plural forms for `nan` (Hokkien).
+
+## v0.1.1, v0.1.2
+
+Add some metadata, as well as set up publishing on tagging releases.
+
+v0.1.1 did not successfully release since I tried to use publint without installing it. v0.1.2 actually goes through.
+
 ## v0.1.0 (2026-07-02)
 
 ### Feature
