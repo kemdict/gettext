@@ -1,5 +1,5 @@
 import Gettext, { guessEnvLocale } from "@kemdict/gettext";
-import { bindtextdomain } from "@kemdict/gettext/loaders.js";
+import { bindtextdomain } from "@kemdict/gettext/loaders-node.js";
 import { parseArgs } from "node:util";
 import { sprintf } from "sprintf-js";
 

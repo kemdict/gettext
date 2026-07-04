@@ -22,6 +22,10 @@
       "types": "./types/gettext.d.ts",
       "default": "./lib/gettext.js"
     },
+    "./loaders-node.js": {
+      "types": "./types/loaders-node.d.ts",
+      "default": "./lib/loaders-node.js"
+    },
     "./loaders.js": {
       "types": "./types/loaders.d.ts",
       "default": "./lib/loaders.js"

@@ -66,7 +66,7 @@ gettext('The world is a funny place')
 
 ```js
 import Gettext from '@kemdict/gettext'
-import { loadTranslations } from '@kemdict/gettext/loaders'
+import { loadTranslations } from '@kemdict/gettext/loaders-node'
 const gt = new Gettext({
   // this reads and parses all .po files under path/to/locales
   // their filenames are the locale names ('de.po' creates an entry for 'de')
@@ -124,7 +124,7 @@ Translate a string with context like pgettext.
 
 Translate a string with context and plural handling like npgettext.
 
-### Loaders ("@kemdict/gettext/loaders.js")
+### Loaders that require Node-compatible environments ("@kemdict/gettext/loaders-node.js")
 
 #### bindtextdomain(domain, ...localesDirs) → Record<string, GetTextTranslations>
 
@@ -145,6 +145,12 @@ pgettext("@title:window", "Choose Folder") // 選擇資料夾 in zh_TW
 #### loadTranslations(dir) → Record<string, GetTextTranslations>
 
 Load PO files from `dir`. `dir` should contain one PO file for each locale, like `<dir>/zh_TW.po`, `<dir>/de.po`, `<dir>/sv.po`, and so on.
+
+### Loaders that don't ("@kemdict/gettext/loaders.js")
+
+#### loadTranslationsFromObject(obj) → Record<string, GetTextTranslations>
+
+Take an object like the result of doing `import.meta.glob("*.po", { eager: true, query: "?raw" })` in Vite, then return an object mapping language codes to parsed translations. There should be one entry for each locale, like `zh_TW.po`, `de.po`, `sv.po`, and so on.
 
 ## License
 

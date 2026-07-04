@@ -259,7 +259,7 @@ describe("Tests using examples", () => {
     /** @type {Gettext} */
     let gt;
     beforeEach(async () => {
-        const { loadTranslations } = await import("../lib/loaders.js");
+        const { loadTranslations } = await import("../lib/loaders-node.js");
         gt = new Gettext({
             translations: loadTranslations(
                 import.meta.dirname + "/../examples/hello/po",
