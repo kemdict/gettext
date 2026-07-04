@@ -1,5 +1,12 @@
 # @kemdict/gettext Changelog
 
+## v0.2.0 (2026-07-04)
+
+### Changed
+
+- Moved loaders that require node (fs, path) to @kemdict/gettext/loaders-node
+- Add a new loader, `loadTranslationsFromObject`, for dealing with files imported through Vite's import.meta.glob. This loader is in @kemdict/gettext/loaders and does not require node (works on client side code).
+
 ## v0.1.3 (2026-07-04)
 
 Add fallback plural forms for `nan` (Hokkien).
