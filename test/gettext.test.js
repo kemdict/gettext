@@ -307,6 +307,20 @@ describe("Tests using examples", () => {
     });
 });
 
+describe("Loading with loadTranslationsFromObject", () => {
+    it("should load just fine", async () => {
+        const { loadTranslationsFromObject } =
+            await import("../lib/loaders.js");
+        const translations = loadTranslationsFromObject({
+            "../../zh_TW.po": fs.readFileSync(
+                import.meta.dirname + "/../examples/hello/po/zh_TW.po",
+                { encoding: "utf-8" },
+            ),
+        });
+        assert.ok(translations["zh_TW"].translations);
+    });
+});
+
 describe("Performance", () => {
     /** @type (n: number, body: (...args: any[]) => any) => number */
     function bench(n, body) {
